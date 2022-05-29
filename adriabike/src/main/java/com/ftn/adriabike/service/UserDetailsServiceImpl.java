@@ -18,7 +18,7 @@ import java.util.List;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private KorisnikServis userService;
+    private KorisnikService userService;
 
 
     @Override

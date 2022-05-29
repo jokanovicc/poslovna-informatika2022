@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Data
@@ -19,7 +20,7 @@ public class IzlaznaFaktura {
 
     private Integer brojFakture;
 
-    private LocalDate datumIzdavanja;
+    private Date datumIzdavanja;
 
     private String datumValute;
 

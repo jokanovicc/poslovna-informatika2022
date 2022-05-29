@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Data
@@ -19,9 +20,9 @@ public class Prijemnica {
 
     private Integer broj;
 
-    private LocalDate datumDokumenta;
+    private Date datumDokumenta;
 
-    private LocalDate datumKnjizenja;
+    private Date datumKnjizenja;
 
     @ManyToOne
     private Magacin magacin;

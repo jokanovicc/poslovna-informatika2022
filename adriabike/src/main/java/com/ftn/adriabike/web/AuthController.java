@@ -2,7 +2,7 @@ package com.ftn.adriabike.web;
 
 import com.ftn.adriabike.model.Korisnik;
 import com.ftn.adriabike.security.TokenUtils;
-import com.ftn.adriabike.service.KorisnikServis;
+import com.ftn.adriabike.service.KorisnikService;
 import com.ftn.adriabike.web.dto.LoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class AuthController {
 
 
     @Autowired
-    KorisnikServis korisnikServis;
+    KorisnikService korisnikServis;
 
     @Autowired
     UserDetailsService userDetailsService;

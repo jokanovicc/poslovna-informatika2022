@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Data
@@ -17,7 +18,7 @@ public class PrometMagacinskeKartice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private LocalDate datum;
+    private Date datum;
 
     private Integer kolicina;
 
