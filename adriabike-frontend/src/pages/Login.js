@@ -28,7 +28,7 @@ const Login = () => {
     <Container>
       <Row>
         <Col md={{ span: 6, offset: 3 }} style={{ textAlign: "center", fontSize: "21px", padding:"20px"}}>
-        <h3>Пријава на систем</h3>
+        <h3>Пријава</h3>
         <hr/>
           <Form>
             <Form.Group>
@@ -37,6 +37,7 @@ const Login = () => {
                 type="text"
                 name="username"
                 value={credentials.username}
+                placeholder="корисничко име"
                 onChange={handleFormInputChange("username")}
               />
             </Form.Group>
@@ -47,9 +48,10 @@ const Login = () => {
                 name="password"
                 value={credentials.password}
                 onChange={handleFormInputChange("password")}
+                placeholder="лозинка"
               />
             </Form.Group>
-            <Button style={{marginTop:"20px"}} variant="primary" onClick={login}>
+            <Button className={"button"} style={{marginTop:"20px"}} variant="primary" onClick={login}>
               ПРИЈАВА
             </Button>
           </Form>

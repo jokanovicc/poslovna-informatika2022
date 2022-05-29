@@ -17,10 +17,10 @@ async function login(userCredentials) {
     if (decoded_token) {
       TokenService.setToken(response.data);
       alert(response.data);
-      if(TokenService.getRole == "ROLE_KUPAC"){
-        alert("KUPAC")
+      if(getRole() == "ROLE_KUPAC"){
+        window.location.assign("/home-customer")
       }else{
-        alert("PRODAVAC")
+        alert("PRODAVAC - not implemented")
       }
     } else {
       console.error("Invalid token");

@@ -1,2 +1,5 @@
-html,body { background-color: #f5f5f5; font-family: BlinkMacSystemFont; }
+html,body { background-color: #f5f5f5; font-family: 'Montserrat', 'Open Sans'; }
 
+.button{
+    background-color: #2A2F4D;
+}

@@ -12,8 +12,14 @@ INSERT into poslovna_godina(godina, zakljucena, preduzece_id) VALUES (2022,false
 INSERT INTO poreska_stopa(datum_stupanja, procenatpdv) values ('2012-08-25',25);
 INSERT INTO poreska_kategorija(naziv, poreska_stopa_id) values ('PDV za prevozna sredstva', 1);
 
-INSERT INTO artikal(naziv, opis, pakovanje, slika, poreska_kategorija_id) VALUES ('Adria Nomad', 'MTB Bike 2022', 1, 'url',1);
+INSERT INTO artikal(naziv, opis, pakovanje, slika, poreska_kategorija_id) VALUES ('Adria Nomad', 'MTB Bike 2022', 1, 'https://www.bcgroup-online.com/upload/b/38470-adria-nomad-26-crno-crveno.jpg',1);
+INSERT INTO artikal(naziv, opis, pakovanje, slika, poreska_kategorija_id) VALUES ('Adria Hiperion 26', 'MTB Bike 2016', 1, 'https://www.capriolo.com/sites/default/files/styles/capriolo_app_960x660/public/bike/7_0.jpg?itok=ORiVJ7S9',1);
 insert into magacinska_kartica(pocetno_stanje_kolicina, pocetno_stanje_vrednost, promet_izlaza_kolicina,promet_izlaza_vrednost,promet_ulaza_kolicina, promet_ulaza_vrednost, prosecna_cena, ukupna_vrednost, artikal_id, magacin_id, poslovna_godina_id) VALUES(0, 0, 0, 0, 1, 18000,18000, 18000, 1, 1, 1);
+insert into magacinska_kartica(pocetno_stanje_kolicina, pocetno_stanje_vrednost, promet_izlaza_kolicina,promet_izlaza_vrednost,promet_ulaza_kolicina, promet_ulaza_vrednost, prosecna_cena, ukupna_vrednost, artikal_id, magacin_id, poslovna_godina_id) VALUES(0, 0, 0, 0, 1, 12000,18000, 12000, 2, 1, 1);
 
+INSERT INTO cenovnik(start, preduzece_id) VALUES ('2022-03-06', 1);
+INSERT INTO stavka_cenovnika(cena, artikal_id, cenovnik_id) VALUES (12000, 1, 1);
 INSERT INTO cenovnik(start, preduzece_id) VALUES ('2022-05-06', 1);
-INSERT INTO stavka_cenovnika(cena, artikal_id, cenovnik_id) VALUES (18000, 1, 1);
+INSERT INTO stavka_cenovnika(cena, artikal_id, cenovnik_id) VALUES (18000, 1, 2);
+INSERT INTO stavka_cenovnika(cena, artikal_id, cenovnik_id) VALUES (9000, 2, 2);
+
