@@ -7,7 +7,7 @@ const Footer = () => {
 
     return(
 
-    <Navbar fixed="bottom" variant="dark">
+    <Navbar variant="dark">
         <Container>
             <Col lg={12} className="text-center text-muted">
                 <div>{fullYear-1}-{fullYear} Adria Bike Store</div>

@@ -7,6 +7,9 @@ import Footer from "./components/Footer";
 import HomeCustomer from "./pages/kupac/HomeCustomer";
 import Magacini from "./pages/radnik/Magacini";
 import MagacinskaKartica from "./pages/radnik/MagacinskaKartica";
+import DodavanjeRobe from "./pages/radnik/DodavanjeRobe";
+import SvePrijemnice from "./pages/radnik/SvePrijemnice";
+import Prijemnica from "./pages/radnik/Prijemnica";
 
 function App() {
   return (
@@ -18,6 +21,10 @@ function App() {
           <Route path="/home-customer" element={<HomeCustomer/>} />
           <Route path="/warehouse" element={<Magacini/>} />
           <Route path="/card/:id" element={<MagacinskaKartica/>} />
+          <Route path="/dobavljanje-robe/:id" element={<DodavanjeRobe/>} />
+          <Route path="/prijemnice" element={<SvePrijemnice/>} />
+
+          <Route path="/prijemnica/:id" element={<Prijemnica/>} />
 
 
         </Routes>

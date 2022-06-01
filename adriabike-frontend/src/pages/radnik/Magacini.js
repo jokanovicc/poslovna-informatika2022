@@ -6,6 +6,9 @@ const Magacini = () => {
 
     const [magacini, setMagacini] = useState([]);
     const [kartice, setKartice] = useState([]);
+    const[magacin,setMagacin] = useState({
+        id:0
+    })
 
 
 
@@ -28,7 +31,7 @@ const Magacini = () => {
         try {
             const response = await MagacinService.getById(id)
             setKartice(response.data);
-            console.log(response.data);
+            magacin.id = id;
         } catch (e) {
             console.error("Error while getting api")
         }
@@ -79,7 +82,8 @@ const Magacini = () => {
                                     <td>{k.ukupnaVrednost}</td>
                                     <td>
                                         <a href={/card/ + k.id}>Детаљи</a>
-                                    </td>    
+                                    </td>
+                                    <td></td>    
                                                                 
                                 </tr>
 
@@ -92,7 +96,7 @@ const Magacini = () => {
                 </tbody>
             </Table>
 
-            {kartice.length !== 0 ? <Button style={{width:"100%"}}>Наручи нову робу!</Button> : <br/>};
+            {kartice.length !== 0 ? <a href={/dobavljanje-robe/ + magacin.id} style={{width:"100%"}}>Наручи нову робу!</a> : <br/>};
         </>
     )
 }

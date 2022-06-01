@@ -11,6 +11,8 @@ INSERT into poslovna_godina(godina, zakljucena, preduzece_id) VALUES (2022,false
 
 INSERT INTO poreska_stopa(datum_stupanja, procenatpdv) values ('2012-08-25',25);
 INSERT INTO poreska_kategorija(naziv, poreska_stopa_id) values ('PDV za prevozna sredstva', 1);
+INSERT INTO poreska_kategorija(naziv, poreska_stopa_id) values ('PDV za periferije', 1);
+
 
 INSERT INTO artikal(naziv, opis, pakovanje, slika, poreska_kategorija_id) VALUES ('Adria Nomad', 'MTB Bike 2022', 1, 'https://www.bcgroup-online.com/upload/b/38470-adria-nomad-26-crno-crveno.jpg',1);
 INSERT INTO artikal(naziv, opis, pakovanje, slika, poreska_kategorija_id) VALUES ('Adria Hiperion 26', 'MTB Bike 2016', 1, 'https://www.capriolo.com/sites/default/files/styles/capriolo_app_960x660/public/bike/7_0.jpg?itok=ORiVJ7S9',1);

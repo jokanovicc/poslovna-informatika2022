@@ -25,7 +25,7 @@ const HomeCustomer = () => {
   const renderCard = (artikal, id) => {
     return (
       <>
-        <Card style={{ width: "20rem", textAlign: "center", display: "inline-block", margin: "35px", boxShadow: " 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.20)" }} key={id} >
+        <Card style={{ width: "20rem", textAlign: "center", display: "inline-block", margin: "35px", boxShadow: " 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.20)"}} key={id} >
           <Card.Img style={{ height: "260px", width: "310px", padding: "10px" }} className="slikaProizvoda" variant="top" src={artikal.slika} />
           <Card.Body>
             <Card.Title><h5><a href={/artikal/ + artikal.id}>{artikal.naziv}</a></h5></Card.Title>

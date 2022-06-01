@@ -8,6 +8,8 @@ import com.ftn.adriabike.repository.MagacinRepository;
 import com.ftn.adriabike.repository.PrijemnicaRepository;
 import com.ftn.adriabike.repository.StavkaPrometnogDokumentaRepository;
 import com.ftn.adriabike.web.dto.DobavljanjeNoveRobeDTO;
+import com.ftn.adriabike.web.dto.PrijemnicaResponseDTO;
+import com.ftn.adriabike.web.dto.StavkaPrometnogDokumentaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +60,35 @@ public class PrijemnicaService {
 
         }
 
+    }
+
+    public PrijemnicaResponseDTO getDetaljnaPrijemnicaById(Integer idPrijemnice){
+        Prijemnica prijemnica = prijemnicaRepository.findById(idPrijemnice).orElse(null);
+
+        PrijemnicaResponseDTO prijemnicaResponseDTO = new PrijemnicaResponseDTO(prijemnica);
+
+        for(StavkaPrometnogDokumenta stavka: stavkaPrometnogDokumentaRepository.findAllByPrijemnica(prijemnica)){
+            prijemnicaResponseDTO.getStavkaPrometnogDokumenta().add(new StavkaPrometnogDokumentaDTO(stavka));
+        }
+
+        return prijemnicaResponseDTO;
+    }
+
+    public List<PrijemnicaResponseDTO> getAllDetaljnaPrijemnica(){
+        List<Prijemnica> prijemnice = prijemnicaRepository.findAll();
+        List<PrijemnicaResponseDTO> prijemnicaResponseDTO = new ArrayList<>();
+
+        for(Prijemnica prijemnica : prijemnice){
+            PrijemnicaResponseDTO response = new PrijemnicaResponseDTO(prijemnica);
+            prijemnicaResponseDTO.add(response);
+
+            for(StavkaPrometnogDokumenta stavka: stavkaPrometnogDokumentaRepository.findAll()){
+                response.getStavkaPrometnogDokumenta().add(new StavkaPrometnogDokumentaDTO(stavka));
+            }
+
+        }
+
+        return prijemnicaResponseDTO;
     }
 
 }
