@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { MagacinService } from '../../services/MagacinService';
-import { Dropdown, DropdownButton, Table } from 'react-bootstrap';
+import { Dropdown, DropdownButton, Table, Button} from 'react-bootstrap';
 
 const Magacini = () => {
 
@@ -36,7 +36,8 @@ const Magacini = () => {
 
     return (
         <>
-            <h1 className='text-center'>Magacinske Kartice</h1>
+            <h2 className='text-center'>Магацинске картице</h2>
+            
             <hr />
 
 
@@ -78,14 +79,20 @@ const Magacini = () => {
                                     <td>{k.ukupnaVrednost}</td>
                                     <td>
                                         <a href={/card/ + k.id}>Детаљи</a>
-                                    </td>                                
+                                    </td>    
+                                                                
                                 </tr>
+
                             )
                         })
+
+                    
 
                     }
                 </tbody>
             </Table>
+
+            {kartice.length !== 0 ? <Button style={{width:"100%"}}>Наручи нову робу!</Button> : <br/>};
         </>
     )
 }

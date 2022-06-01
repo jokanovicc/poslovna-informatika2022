@@ -1,9 +1,12 @@
 package com.ftn.adriabike.service;
 
+import com.ftn.adriabike.model.Artikal;
 import com.ftn.adriabike.model.Magacin;
 import com.ftn.adriabike.model.MagacinskaKartica;
+import com.ftn.adriabike.repository.ArtikalRepository;
 import com.ftn.adriabike.repository.MagacinRepository;
 import com.ftn.adriabike.repository.MagacinskaKarticaRepository;
+import com.ftn.adriabike.web.dto.DobavljanjeNoveRobeDTO;
 import com.ftn.adriabike.web.dto.MagacinResponseDTO;
 import com.ftn.adriabike.web.dto.MagacinskaKarticaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,9 @@ public class MagacinService {
 
     @Autowired
     private MagacinskaKarticaRepository magacinskaKarticaRepository;
+
+    @Autowired
+    private ArtikalRepository artikalRepository;
 
 
     public List<MagacinResponseDTO> getAll(){
@@ -44,5 +50,6 @@ public class MagacinService {
     public MagacinskaKarticaResponse findOne(Integer id){
         return new MagacinskaKarticaResponse(magacinskaKarticaRepository.findById(id).orElse(null));
     }
+
 
 }
