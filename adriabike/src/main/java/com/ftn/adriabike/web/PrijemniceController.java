@@ -1,6 +1,7 @@
 package com.ftn.adriabike.web;
 
 import com.ftn.adriabike.service.PrijemnicaService;
+import com.ftn.adriabike.web.dto.PrijemnicaPagingResponseDTO;
 import com.ftn.adriabike.web.dto.PrijemnicaResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +26,18 @@ public class PrijemniceController {
 
     }
 
-    @GetMapping
+/*    @GetMapping
     public ResponseEntity<List<PrijemnicaResponseDTO>> getPrijemnica(){
         return ResponseEntity
                 .ok()
                 .body(prijemnicaService.getAllDetaljnaPrijemnica());
+
+    }*/
+
+    @GetMapping
+    public PrijemnicaPagingResponseDTO getAllPrijemnice(@RequestParam(defaultValue = "0") Integer page){
+        return prijemnicaService.getAllDetaljnaPrijemnica(page);
+
 
     }
 

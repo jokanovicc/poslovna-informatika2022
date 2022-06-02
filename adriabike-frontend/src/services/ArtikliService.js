@@ -20,8 +20,16 @@ async function getPoreske(){
     return await AxiosClient.get("http://localhost:8080/api/articles/poreske-kategorije");
 }
 
-async function getPrijemnice(){
-    return await AxiosClient.get("http://localhost:8080/api/prijemnice");
+async function getPrijemnice(pageNumber){
+    const options = {
+        params: {
+            page: pageNumber ? pageNumber : 0
+        }
+    }
+
+    return await AxiosClient.get("http://localhost:8080/api/prijemnice", options);
+
+
 }
 
 async function getPrijemniceById(id){

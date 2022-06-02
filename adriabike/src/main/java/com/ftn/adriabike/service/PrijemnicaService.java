@@ -8,9 +8,13 @@ import com.ftn.adriabike.repository.MagacinRepository;
 import com.ftn.adriabike.repository.PrijemnicaRepository;
 import com.ftn.adriabike.repository.StavkaPrometnogDokumentaRepository;
 import com.ftn.adriabike.web.dto.DobavljanjeNoveRobeDTO;
+import com.ftn.adriabike.web.dto.PrijemnicaPagingResponseDTO;
 import com.ftn.adriabike.web.dto.PrijemnicaResponseDTO;
 import com.ftn.adriabike.web.dto.StavkaPrometnogDokumentaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -74,11 +78,14 @@ public class PrijemnicaService {
         return prijemnicaResponseDTO;
     }
 
-    public List<PrijemnicaResponseDTO> getAllDetaljnaPrijemnica(){
-        List<Prijemnica> prijemnice = prijemnicaRepository.findAll();
+    public PrijemnicaPagingResponseDTO getAllDetaljnaPrijemnica(Integer pageNo){
+        //List<Prijemnica> prijemnice = prijemnicaRepository.findAll();
+        Pageable paging = PageRequest.of(pageNo,1);
+
+        Page<Prijemnica> prijemnice = prijemnicaRepository.findAll(paging);
         List<PrijemnicaResponseDTO> prijemnicaResponseDTO = new ArrayList<>();
 
-        for(Prijemnica prijemnica : prijemnice){
+        for(Prijemnica prijemnica : prijemnice.getContent()){
             PrijemnicaResponseDTO response = new PrijemnicaResponseDTO(prijemnica);
             prijemnicaResponseDTO.add(response);
 
@@ -88,7 +95,15 @@ public class PrijemnicaService {
 
         }
 
-        return prijemnicaResponseDTO;
+        PrijemnicaPagingResponseDTO prijemnicePaging = new PrijemnicaPagingResponseDTO();
+        prijemnicePaging.setPrijemnice(prijemnicaResponseDTO);
+        prijemnicePaging.setPagesCount(prijemnice.getTotalPages());
+
+
+
+
+
+        return prijemnicePaging;
     }
 
 }

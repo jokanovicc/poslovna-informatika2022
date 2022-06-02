@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { ArtikliService } from '../../services/ArtikliService';
 import { Table, Button} from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const Prijemnica = () => {
 
@@ -14,6 +16,16 @@ const Prijemnica = () => {
         fetchPrijemnice();
     }, [])
 
+    const columns = [
+        {title:"Naziv Artikla",field:"nazivArtikla"},
+        {title:"Cena",field:"cena"},
+        {title:"Kolicina",field:"kolicina"},
+        {title:"Poreska stopa",field:"poreskaStopa"},
+        {title:"Vrednost",field:"vrednost"}
+
+
+    ]
+
     async function fetchPrijemnice() {
         try {
             const response = await ArtikliService.getPrijemniceById(id);
@@ -23,6 +35,24 @@ const Prijemnica = () => {
             console.error("Error while getting api")
         }
     }
+
+
+    const downloadPdf = () => {
+        const doc = new jsPDF();
+        let text = 'Prijemnica: ' + prijemnica.broj + "\nDatum: " + prijemnica.datumDokumenta + "\nMagacin: " + prijemnica.magacinNaziv + "\nDobaljena roba:"
+        doc.text(text,13,10);
+        doc.setFontSize(15);
+        doc.autoTable({
+            theme:"grid",
+            startY: 35,
+            columns:columns.map(col => ({...col,dataKey:col.field})),
+            body: prijemnica.stavkaPrometnogDokumenta
+        })
+        doc.save('prijemnica.pdf');
+
+    }
+
+
     return (
         <>
             <h2 className='text-center'>Пријемница бр. {prijemnica.broj}</h2>
@@ -60,6 +90,9 @@ const Prijemnica = () => {
                     }
                 </tbody>
             </Table>
+            <button onClick={downloadPdf}>Generate PDF</button>
+
+
         </>
     )
 }
