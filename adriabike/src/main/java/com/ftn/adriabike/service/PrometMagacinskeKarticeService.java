@@ -5,11 +5,14 @@ import com.ftn.adriabike.model.PrometMagacinskeKartice;
 import com.ftn.adriabike.model.Smer;
 import com.ftn.adriabike.repository.PrometMagacinskeKarticeRepository;
 import com.ftn.adriabike.web.dto.DobavljanjeNoveRobeDTO;
+import com.ftn.adriabike.web.dto.PrometMagacinskeKarticeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 @Service
 public class PrometMagacinskeKarticeService {
@@ -34,5 +37,16 @@ public class PrometMagacinskeKarticeService {
 
 
     }
+
+    public List<PrometMagacinskeKarticeDTO> getAnalitika(Date dateStart, Date dateEnd){
+
+        List<PrometMagacinskeKarticeDTO> prometMagacinskeKartice = new ArrayList<>();
+        for(PrometMagacinskeKartice p: prometMagacinskeKarticeRepository.findBetweenDates(dateStart, dateEnd)){
+            prometMagacinskeKartice.add(new PrometMagacinskeKarticeDTO(p));
+        }
+        return prometMagacinskeKartice;
+    }
+
+
 
 }

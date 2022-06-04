@@ -58,7 +58,7 @@ public class PrijemnicaService {
             stavkaPrometnogDokumenta.setPrijemnica(prijemnica);
             stavkaPrometnogDokumenta.setArtikal(artikalRepository.findById(dobavljenjeNoveRobe.getArtikalId()).orElse(null));
             stavkaPrometnogDokumenta.setKolicina(dobavljenjeNoveRobe.getKolicina());
-            stavkaPrometnogDokumenta.setCena(dobavljenjeNoveRobe.getCena());
+            stavkaPrometnogDokumenta.setCena(dobavljenjeNoveRobe.getNabavnaCena());
             stavkaPrometnogDokumenta.setVrednost(dobavljenjeNoveRobe.getKolicina() * dobavljenjeNoveRobe.getCena());
             stavkaPrometnogDokumentaRepository.save(stavkaPrometnogDokumenta);
 

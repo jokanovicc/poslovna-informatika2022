@@ -3,7 +3,8 @@ import AxiosClient from "./clients/AxiosClient"
 export const MagacinService = {
     getAll,
     getById,
-    getMagacinskaKartica
+    getMagacinskaKartica,
+    getAnalitikaBetweenDates
 }
 
 async function getAll(){
@@ -18,3 +19,9 @@ async function getById(id){
 async function getMagacinskaKartica(id){
     return await AxiosClient.get(`http://localhost:8080/api/warehouse/${id}/kartica`);
 }
+
+async function getAnalitikaBetweenDates(dateStart, dateEnd){
+    return await AxiosClient.get(`http://localhost:8080/api/warehouse/analytics/${dateStart}/${dateEnd}`)
+}
+
+

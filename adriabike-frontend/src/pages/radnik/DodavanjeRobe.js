@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { ArtikliService } from '../../services/ArtikliService';
 import { Button, Col, Container, Form, Table, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 
@@ -60,6 +61,7 @@ const DodavanjeRobe = () => {
     const sendRequest = async () => {
         console.log(listaNoveRoba);
         await ArtikliService.dobaviRobu(listaNoveRoba);
+        Swal.fire('Uspešno unešenea roba!', 'U slučaju da roba već postoji u sistemu, količina će biti ažurirana!', "success");
     }
 
     function cleanField() {
@@ -126,7 +128,7 @@ const DodavanjeRobe = () => {
                         <Row>
                             <Col>
                                 <Form.Group>
-                                    <Form.Label>Цена</Form.Label>
+                                    <Form.Label>Продајна цена</Form.Label>
                                     <Form.Control
                                         type="number"
                                         max="1000"
@@ -139,6 +141,7 @@ const DodavanjeRobe = () => {
                                 </Form.Group>
                             </Col>
                             <Col>
+
                                 <Form.Group>
                                     <Form.Label>Количина</Form.Label>
                                     <Form.Control
@@ -149,8 +152,24 @@ const DodavanjeRobe = () => {
 
                                     />
                                 </Form.Group>
+
+                            </Col>
+                            <Col>
+                            <Form.Group>
+                                    <Form.Label>Набавна цена</Form.Label>
+                                    
+                                    <Form.Control
+                                        type="number"
+                                        max="1000"
+                                        name="nabavnaCena"
+                                        value={dobavljanjeRobe.nabavnaCena}
+                                        onChange={handleFormInputChange("nabavnaCena")}
+
+                                    />
+                                </Form.Group>
                             </Col>
                         </Row>
+
 
 
 
@@ -186,7 +205,7 @@ const DodavanjeRobe = () => {
                         <tbody>
                             {listaNoveRoba.length === 0 ?
                                 <tr>
-                                    <td>{listaNoveRoba.length}= No projects added!</td>
+                                    <td>{listaNoveRoba.length}Није додан ниједан!</td>
                                 </tr> :
                                 listaNoveRoba.map((r) => {
                                     return (

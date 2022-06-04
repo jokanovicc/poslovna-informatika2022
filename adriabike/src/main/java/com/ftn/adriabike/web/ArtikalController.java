@@ -2,12 +2,10 @@ package com.ftn.adriabike.web;
 
 import com.ftn.adriabike.model.Artikal;
 import com.ftn.adriabike.service.ArtikalService;
+import com.ftn.adriabike.service.CenovnikService;
 import com.ftn.adriabike.service.PoreskaKategorijaService;
 import com.ftn.adriabike.service.PrijemnicaService;
-import com.ftn.adriabike.web.dto.ArtikalResponseDTO;
-import com.ftn.adriabike.web.dto.DobavljanjeNoveRobeDTO;
-import com.ftn.adriabike.web.dto.PoreskaKategorijaResponseDTO;
-import com.ftn.adriabike.web.dto.PrijemnicaResponseDTO;
+import com.ftn.adriabike.web.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +27,7 @@ public class ArtikalController {
     private PoreskaKategorijaService poreskaService;
 
     @Autowired
-    private PrijemnicaService prijemnicaService;
+    private CenovnikService cenovnikService;
 
 
     @GetMapping
@@ -53,6 +51,10 @@ public class ArtikalController {
     }
 
 
+    @GetMapping("/cenovnici")
+    public CenovniciPagingResult getCenovnici(@RequestParam(defaultValue = "0") Integer page){
+        return cenovnikService.getAllCenovnici(page);
+    }
 
 
 }

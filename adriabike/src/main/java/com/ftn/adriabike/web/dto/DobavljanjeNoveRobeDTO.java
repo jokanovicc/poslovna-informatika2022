@@ -23,6 +23,8 @@ public class DobavljanjeNoveRobeDTO {
     //cena ce bidi dodana u poslenji cenovnik
     private Double cena;
 
+    private Double nabavnaCena;
+
     private Integer kolicina;
 
     private Integer magacinId;

@@ -5,7 +5,8 @@ export const ArtikliService = {
     dobaviRobu,
     getPoreske,
     getPrijemnice,
-    getPrijemniceById
+    getPrijemniceById,
+    getCenovici
 }
 
 async function getAll(){
@@ -28,6 +29,18 @@ async function getPrijemnice(pageNumber){
     }
 
     return await AxiosClient.get("http://localhost:8080/api/prijemnice", options);
+
+
+}
+
+async function getCenovici(pageNumber){
+    const options = {
+        params: {
+            page: pageNumber ? pageNumber : 0
+        }
+    }
+
+    return await AxiosClient.get("http://localhost:8080/api/articles/cenovnici", options);
 
 
 }

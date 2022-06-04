@@ -22,6 +22,7 @@ public class StavkaPrometnogDokumentaDTO {
     public StavkaPrometnogDokumentaDTO(StavkaPrometnogDokumenta stavkaPrometnogDokumenta){
         this.id = stavkaPrometnogDokumenta.getId();
         this.kolicina = stavkaPrometnogDokumenta.getKolicina();
+        this.cena = stavkaPrometnogDokumenta.getCena();
         this.vrednost = stavkaPrometnogDokumenta.getVrednost();
         this.nazivArtikla = stavkaPrometnogDokumenta.getArtikal().getNaziv();
         this.poreskaStopa = stavkaPrometnogDokumenta.getArtikal().getPoreskaKategorija().getPoreskaStopa().getProcenatPDV();

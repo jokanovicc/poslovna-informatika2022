@@ -1,12 +1,15 @@
 package com.ftn.adriabike.web;
 
 import com.ftn.adriabike.service.MagacinService;
+import com.ftn.adriabike.service.PrometMagacinskeKarticeService;
 import com.ftn.adriabike.web.dto.MagacinResponseDTO;
 import com.ftn.adriabike.web.dto.MagacinskaKarticaResponse;
+import com.ftn.adriabike.web.dto.PrometMagacinskeKarticeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -16,6 +19,8 @@ public class MagacinController {
 
     @Autowired
     private MagacinService magacinService;
+    @Autowired
+    private PrometMagacinskeKarticeService prometMagacinskeKarticeService;
 
 
     @GetMapping
@@ -38,6 +43,13 @@ public class MagacinController {
         return ResponseEntity
                 .ok()
                 .body(magacinService.findOne(id));
+    }
+
+    @GetMapping("/analytics/{dateStart}/{dateEnd}")
+    public ResponseEntity<List<PrometMagacinskeKarticeDTO>> getAnalyticsByDate(@PathVariable("dateStart")Date dateStart, @PathVariable("dateEnd")Date dateEnd){
+        return ResponseEntity
+                .ok()
+                .body(prometMagacinskeKarticeService.getAnalitika(dateStart, dateEnd));
     }
 
 

@@ -10,6 +10,8 @@ import MagacinskaKartica from "./pages/radnik/MagacinskaKartica";
 import DodavanjeRobe from "./pages/radnik/DodavanjeRobe";
 import SvePrijemnice from "./pages/radnik/SvePrijemnice";
 import Prijemnica from "./pages/radnik/Prijemnica";
+import AnalitikaMagacinskeKartice from "./pages/radnik/AnalitikaMagacinskeKartice";
+import Cenovnici from "./pages/radnik/Cenovnici";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
 
           <Route path="/prijemnica/:id" element={<Prijemnica/>} />
 
+          <Route path="/analytic" element={<AnalitikaMagacinskeKartice/>} />
+          <Route path="/cenovnici" element={<Cenovnici/>} />
 
         </Routes>
       </Container>
