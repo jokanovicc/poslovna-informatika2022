@@ -22,7 +22,7 @@ public class IzlaznaFaktura {
 
     private Date datumIzdavanja;
 
-    private String datumValute;
+    private Date datumValute;
 
     private Double ukupnaOsnovica;
 

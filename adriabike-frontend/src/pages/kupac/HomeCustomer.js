@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { ArtikliService } from '../../services/ArtikliService';
 import { Container, Card, Button, Row, Col, CardDeck } from "react-bootstrap";
+import { KupovinaService } from '../../services/KupovinaService';
 
 const HomeCustomer = () => {
   const [artikli, setArtikli] = useState([]);
+  const[korpaItem, setKorpaItem] = useState({
+    artikalId:0,
+    kolicina:0
+  })
 
 
   useEffect(() => {
@@ -22,22 +27,15 @@ const HomeCustomer = () => {
 
   }
 
-  const renderCard = (artikal, id) => {
-    return (
-      <>
-        <Card style={{ width: "20rem", textAlign: "center", display: "inline-block", margin: "35px", boxShadow: " 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.20)"}} key={id} >
-          <Card.Img style={{ height: "260px", width: "310px", padding: "10px" }} className="slikaProizvoda" variant="top" src={artikal.slika} />
-          <Card.Body>
-            <Card.Title><h5><a href={/artikal/ + artikal.id}>{artikal.naziv}</a></h5></Card.Title>
-            <Card.Text><h5>{artikal.ukupnaCena}РСД</h5></Card.Text>
-            <hr />
-            <Button>Купи</Button>
-          </Card.Body>
-        </Card>
-      </>
-    );
+  async function addToKorpa(id){
+    let kolicina = prompt("Унесите количину", 0);
+    korpaItem.artikalId = Number(id);
+    korpaItem.kolicina = Number(kolicina);
+    await KupovinaService.addToKorpa(korpaItem);
 
-  };
+
+  }
+
 
   return (
     <>
@@ -58,7 +56,7 @@ height:"15vw", objectFit:"cover"}} variant="top" src={slika} />
                     <Card.Title>{naziv}</Card.Title>
                     <Card.Text>{product.opis}</Card.Text>
                     <Card.Text>{ukupnaCena}.00 RSD</Card.Text>
-                    <Button style={{width:"100%", backgroundColor:"#2A2F4D",borderColor:"#2A2F4D"}} variant="primary">Корпа</Button>
+                    <Button onClick={() => addToKorpa(id)} style={{width:"100%", backgroundColor:"#2A2F4D",borderColor:"#2A2F4D"}} variant="primary">Корпа</Button>
                   </Card.Body>
                 </Card>
               </Col>

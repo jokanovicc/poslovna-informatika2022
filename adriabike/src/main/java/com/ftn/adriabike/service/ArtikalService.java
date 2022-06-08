@@ -56,6 +56,19 @@ public class ArtikalService {
 
     }
 
+    public Double getCenaArtikla(Artikal a){
+        Cenovnik latestCenovnik = cenovnikRepository.findLatest();
+        StavkaCenovnika stavkaCenovnika = stavkaCenovnikaRepository.findStavkaCenovnikaByArtikalAndCenovnik(a, latestCenovnik);
+
+        return stavkaCenovnika.getCena() + ((stavkaCenovnika.getCena() * a.getPoreskaKategorija().getPoreskaStopa().getProcenatPDV()) / 100);
+    }
+
+    public Double getCenaArtiklaOsnovica(Artikal a){
+        Cenovnik latestCenovnik = cenovnikRepository.findLatest();
+        StavkaCenovnika stavkaCenovnika = stavkaCenovnikaRepository.findStavkaCenovnikaByArtikalAndCenovnik(a, latestCenovnik);
+        return stavkaCenovnika.getCena();
+    }
+
 
     public void dobavljenjeNoveRobe(List<DobavljanjeNoveRobeDTO> dobavljanjeNoveRobeDTOList){
 

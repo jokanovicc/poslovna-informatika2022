@@ -20,7 +20,7 @@ async function login(userCredentials) {
       if(getRole() == "ROLE_KUPAC"){
         window.location.assign("/home-customer")
       }else{
-        alert("PRODAVAC - not implemented")
+        window.location.assign("/home-radnik")
       }
     } else {
       console.error("Invalid token");

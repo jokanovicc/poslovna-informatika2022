@@ -12,6 +12,8 @@ import SvePrijemnice from "./pages/radnik/SvePrijemnice";
 import Prijemnica from "./pages/radnik/Prijemnica";
 import AnalitikaMagacinskeKartice from "./pages/radnik/AnalitikaMagacinskeKartice";
 import Cenovnici from "./pages/radnik/Cenovnici";
+import HomeRadnik from "./pages/radnik/HomeRadnik";
+import Korpa from "./pages/kupac/Korpa";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
       <Container style={{ marginTop: 35 }}>
         <Routes>
           <Route path="/" element={<Login/>} />
+          <Route path="/home-radnik" element={<HomeRadnik/>} />
+
           <Route path="/home-customer" element={<HomeCustomer/>} />
           <Route path="/warehouse" element={<Magacini/>} />
           <Route path="/card/:id" element={<MagacinskaKartica/>} />
@@ -30,7 +34,7 @@ function App() {
 
           <Route path="/analytic" element={<AnalitikaMagacinskeKartice/>} />
           <Route path="/cenovnici" element={<Cenovnici/>} />
-
+          <Route path="/cart" element={<Korpa/>}/>
         </Routes>
       </Container>
       <Footer/>

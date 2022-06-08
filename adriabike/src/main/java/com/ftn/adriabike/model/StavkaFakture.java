@@ -24,7 +24,7 @@ public class StavkaFakture {
 
     private Double osnovica;
 
-    private Double procenatPDV;
+    private Integer procenatPDV;
 
     private Double iznosPDV;
 
