@@ -2,6 +2,8 @@ package com.ftn.adriabike.service;
 
 import com.ftn.adriabike.model.Artikal;
 import com.ftn.adriabike.model.MagacinskaKartica;
+import com.ftn.adriabike.model.StavkaFakture;
+import com.ftn.adriabike.repository.ArtikalRepository;
 import com.ftn.adriabike.repository.MagacinRepository;
 import com.ftn.adriabike.repository.MagacinskaKarticaRepository;
 import com.ftn.adriabike.repository.PoslovnaGodinaRepository;
@@ -22,6 +24,9 @@ public class MagacinskaKarticaService {
 
     @Autowired
     PoslovnaGodinaRepository poslovnaGodinaRepository;
+
+    @Autowired
+    private ArtikalService artikalService;
 
 
 
@@ -46,6 +51,22 @@ public class MagacinskaKarticaService {
         magacinskaKarticaRepository.save(magacinskaKartica);
 
         prometMagacinskeKarticeService.createUlaznogPrometaMagacinskeKartice(dobavljanjeNoveRobeDTO, magacinskaKartica);
+
+
+
+    }
+
+    public void magacinskaKarticaIzlaz(StavkaFakture stavkaFakture){
+
+        MagacinskaKartica magacinskaKartica = magacinskaKarticaRepository.findFirstByArtikal(stavkaFakture.getArtikal());
+        Double cena = artikalService.getCenaArtiklaOsnovica(stavkaFakture.getArtikal()) * stavkaFakture.getKolicina();
+        magacinskaKartica.setPrometIzlazaKolicina(magacinskaKartica.getPrometIzlazaKolicina() + stavkaFakture.getKolicina());
+        magacinskaKartica.setPrometIzlazaVrednost(magacinskaKartica.getPrometIzlazaVrednost() + cena);
+        magacinskaKartica.setUkupnaVrednost(magacinskaKartica.getUkupnaVrednost() + cena);
+        magacinskaKartica.setProsecnaCena(getProsecnaCena(artikalService.getCenaArtiklaOsnovica(stavkaFakture.getArtikal()), magacinskaKartica));
+
+        magacinskaKarticaRepository.save(magacinskaKartica);
+        prometMagacinskeKarticeService.createIzlaznogPrometaMagacinskeKartice(stavkaFakture, magacinskaKartica);
 
 
 

@@ -32,6 +32,9 @@ public class IzlaznaFaktura {
 
     private Double ukupanIznos;
 
+    @ManyToOne
+    private Korisnik kupac;
+
     @Enumerated(EnumType.STRING)
     private Status statusFakture;
 }

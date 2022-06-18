@@ -16,10 +16,10 @@ public class StavkaKorpe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Artikal artikal;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Korpa korpa;
 
     private Integer kolicina;

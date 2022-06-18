@@ -3,12 +3,16 @@ package com.ftn.adriabike.web;
 import com.ftn.adriabike.service.FakturaService;
 import com.ftn.adriabike.service.KupovinaService;
 import com.ftn.adriabike.web.dto.DodajUKorpuDTO;
+import com.ftn.adriabike.web.dto.IzlaznaFakturaDTO;
 import com.ftn.adriabike.web.dto.KorpaResponseDTO;
+import com.ftn.adriabike.web.dto.StavkaIzlazneFaktureDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping(value ="/api/cart")
 @RestController
@@ -48,4 +52,5 @@ public class KupovinaController {
         fakturaService.createFaktura(authentication);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
 }

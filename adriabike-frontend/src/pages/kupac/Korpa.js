@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import { KupovinaService } from '../../services/KupovinaService';
 import { Button, Table} from 'react-bootstrap';
+import Swal from 'sweetalert2';
 
 
 const Korpa = () => {
@@ -33,7 +34,11 @@ const Korpa = () => {
     }
 
     async function zavrsiKupovinu(){
-        return await KupovinaService.createFaktura();
+        await KupovinaService.createFaktura();
+        
+        const sum = stavke.reduce((partialSum, a) => partialSum.cena + a, 0);
+        Swal.fire('Успешно',`Успешно потврђена куповина\nСума: ${sum}`,'success');
+        window.location.assign("/home-customer")
     }
 
 

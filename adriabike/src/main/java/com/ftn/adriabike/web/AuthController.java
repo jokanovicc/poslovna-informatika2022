@@ -3,6 +3,7 @@ package com.ftn.adriabike.web;
 import com.ftn.adriabike.model.Korisnik;
 import com.ftn.adriabike.security.TokenUtils;
 import com.ftn.adriabike.service.KorisnikService;
+import com.ftn.adriabike.web.dto.KorisnikDTO;
 import com.ftn.adriabike.web.dto.LoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +56,11 @@ public class AuthController {
             return ResponseEntity.notFound().build();
         }
 
+    }
+
+    @GetMapping("/user/{user-id}")
+    public ResponseEntity<KorisnikDTO> getKorisnikById(@PathVariable("user-id") Integer userId){
+        return ResponseEntity.ok().body(korisnikServis.findById(userId));
     }
 
 

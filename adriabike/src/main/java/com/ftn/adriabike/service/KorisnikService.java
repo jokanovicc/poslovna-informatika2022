@@ -2,6 +2,7 @@ package com.ftn.adriabike.service;
 
 import com.ftn.adriabike.model.Korisnik;
 import com.ftn.adriabike.repository.KorisnikRepository;
+import com.ftn.adriabike.web.dto.KorisnikDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,10 @@ public class KorisnikService {
             return user.get();
         }
         return null;
+    }
+
+    public KorisnikDTO findById(Integer id){
+        return new KorisnikDTO(korisnikRepository.findById(id).orElse(null));
     }
 
 

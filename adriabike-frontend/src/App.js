@@ -14,6 +14,8 @@ import AnalitikaMagacinskeKartice from "./pages/radnik/AnalitikaMagacinskeKartic
 import Cenovnici from "./pages/radnik/Cenovnici";
 import HomeRadnik from "./pages/radnik/HomeRadnik";
 import Korpa from "./pages/kupac/Korpa";
+import IzlazneFakture from "./pages/radnik/IzlazneFakture";
+import Faktura from "./pages/radnik/Faktura";
 
 function App() {
   return (
@@ -35,6 +37,9 @@ function App() {
           <Route path="/analytic" element={<AnalitikaMagacinskeKartice/>} />
           <Route path="/cenovnici" element={<Cenovnici/>} />
           <Route path="/cart" element={<Korpa/>}/>
+          <Route path="/fakture" element={<IzlazneFakture/>}/>
+          <Route path="/fakture/:id" element={<Faktura/>}/>
+
         </Routes>
       </Container>
       <Footer/>
