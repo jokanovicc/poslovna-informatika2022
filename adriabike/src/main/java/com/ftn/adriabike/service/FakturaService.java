@@ -198,7 +198,7 @@ public class FakturaService{
             String subject = "Поштовани/а,\nХвала што купујете код нас.\nВаша поруџбина је успешно креирана и спремна је за слање, детаље можете проверити кроз Ваш налог на сајту.\n.";
             notificationService.sendNotification(current, subject, izlaznaFaktura.getBrojFakture());
         }else{
-            izlaznaFaktura.setStatusFakture(Status.NEPOTVRDJENA);
+            izlaznaFaktura.setStatusFakture(Status.ODBIJENA);
             String subject = "Поштовани/а,\nХвала што купујете код нас.\nНажалост, тражену робу немамо на стању те се и поруџбине блокира - детаље можете проверити кроз Ваш налог на сајту.\n.";
             notificationService.sendNotification(current, subject, izlaznaFaktura.getBrojFakture());
         }

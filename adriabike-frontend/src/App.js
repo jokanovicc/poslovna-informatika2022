@@ -18,6 +18,7 @@ import IzlazneFakture from "./pages/radnik/IzlazneFakture";
 import Faktura from "./pages/radnik/Faktura";
 import FaktureKupca from "./pages/kupac/FaktureKupca";
 import Registracija from "./pages/kupac/Registracija";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route path="/user-faktura" element={<FaktureKupca/>}/>
 
           <Route path="/register" element={<Registracija/>}/>
+          <Route path="/profile" element={<Profile/>}/>
 
         </Routes>
       </Container>
