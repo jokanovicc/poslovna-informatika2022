@@ -19,8 +19,9 @@ const HomeRadnik = () => {
                 <Card.Body>
                 <ul style={{fontSize:"22px"}}>
                     <li><a href="warehouse">Магацини</a></li>
-                    <li><a href="warehouse">Наруџбенице</a></li>
-                    <li><a href="warehouse">Ценовници</a></li>
+                    <li><a href="fakture">Фактуре</a></li>
+                    <li><a href="cenovnici">Ценовници</a></li>
+                    <li><a href="prijemnice">Пријем робе</a></li>
 
 
                 </ul>

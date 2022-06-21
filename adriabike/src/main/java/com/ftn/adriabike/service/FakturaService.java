@@ -2,6 +2,7 @@ package com.ftn.adriabike.service;
 
 import com.ftn.adriabike.model.*;
 import com.ftn.adriabike.repository.*;
+import com.ftn.adriabike.web.dto.FakturaEndResponse;
 import com.ftn.adriabike.web.dto.IzlaznaFakturaDTO;
 import com.ftn.adriabike.web.dto.StavkaIzlazneFaktureDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,6 +124,25 @@ public class FakturaService{
         return izlaznaFakturaDTO;
     }
 
+
+    public List<IzlaznaFakturaDTO> getFaktureByUser(Authentication authentication){
+        List<IzlaznaFakturaDTO> izlaznaFakturaDTO = new ArrayList();
+        Korisnik current = userService.getUser(authentication);
+
+        for(IzlaznaFaktura izlaznaFaktura : fakturaRepository.findByKorisnik(current.getId())){
+            izlaznaFakturaDTO.add(new IzlaznaFakturaDTO(izlaznaFaktura));
+            for(StavkaFakture stavkaFakture: stavkaFaktureRepository.findAllByIzlaznaFaktura(izlaznaFaktura)){
+                for(IzlaznaFakturaDTO i:  izlaznaFakturaDTO){
+                    i.getStavkaFakture().add(new StavkaIzlazneFaktureDTO(stavkaFakture));
+                }
+            }
+
+
+        }
+
+        return izlaznaFakturaDTO;
+    }
+
     public IzlaznaFakturaDTO getFaktura(Integer fakturaId){
         IzlaznaFaktura izlaznaFaktura = fakturaRepository.findById(fakturaId).orElse(null);
         IzlaznaFakturaDTO izlaznaFakturaDTO = new IzlaznaFakturaDTO(izlaznaFaktura);
@@ -135,23 +155,58 @@ public class FakturaService{
 
     }
 
-    public String checkKolicina(Integer fakturaId){
-        IzlaznaFaktura izlaznaFaktura = fakturaRepository.findById(fakturaId).orElse(null);
+    public FakturaEndResponse checkKolicina(IzlaznaFaktura izlaznaFaktura){
         StringBuilder message = new StringBuilder();
+        FakturaEndResponse fakturaEnd = new FakturaEndResponse();
+        List<Boolean> list = new ArrayList<>();
+
         for(StavkaFakture stavkaFakture: stavkaFaktureRepository.findAllByIzlaznaFaktura(izlaznaFaktura)){
             MagacinskaKartica magacinskaKartica =magacinskaKarticaRepository.findFirstByArtikal(stavkaFakture.getArtikal());
             Integer kolicina = magacinskaKartica.getPocetnoStanjeKolicina() + magacinskaKartica.getPrometUlazaKolicina() - magacinskaKartica.getPrometIzlazaKolicina();
 
             if(stavkaFakture.getKolicina() < kolicina){
-                message.append("Dostupna je roba ").append(stavkaFakture.getArtikal().getNaziv()).append(" u datoj količini");
+
+                message.append("\nDostupna je roba ").append(stavkaFakture.getArtikal().getNaziv()).append(" u datoj količini");
                 magacinskaKarticaService.magacinskaKarticaIzlaz(stavkaFakture);
+                fakturaEnd.setPoruka(message.toString());
+                list.add(true);
+
             }else{
                 message.append("\nNedostupna je roba ").append(stavkaFakture.getArtikal().getNaziv()).append(", nedovoljna količina!");
+                fakturaEnd.setPoruka(message.toString());
+                list.add(false);
             }
 
 
         }
-        return message.toString();
+        if(list.contains(false)){
+            fakturaEnd.setPotvrdjena(false);
+        }else{
+            fakturaEnd.setPotvrdjena(true);
+        }
+
+        return fakturaEnd;
+    }
+
+
+    public FakturaEndResponse zavrsiFakturu(Integer fakturaId, Authentication authentication){
+        Korisnik current = userService.getUser(authentication);
+        IzlaznaFaktura izlaznaFaktura = fakturaRepository.findById(fakturaId).orElse(null);
+        FakturaEndResponse fakturaEnd = checkKolicina(izlaznaFaktura);
+        if(fakturaEnd.isPotvrdjena()){
+            izlaznaFaktura.setStatusFakture(Status.POTVRDJENA);
+            String subject = "Поштовани/а,\nХвала што купујете код нас.\nВаша поруџбина је успешно креирана и спремна је за слање, детаље можете проверити кроз Ваш налог на сајту.\n.";
+            notificationService.sendNotification(current, subject, izlaznaFaktura.getBrojFakture());
+        }else{
+            izlaznaFaktura.setStatusFakture(Status.NEPOTVRDJENA);
+            String subject = "Поштовани/а,\nХвала што купујете код нас.\nНажалост, тражену робу немамо на стању те се и поруџбине блокира - детаље можете проверити кроз Ваш налог на сајту.\n.";
+            notificationService.sendNotification(current, subject, izlaznaFaktura.getBrojFakture());
+        }
+
+        fakturaRepository.save(izlaznaFaktura);
+        return fakturaEnd;
+
+
     }
 
 

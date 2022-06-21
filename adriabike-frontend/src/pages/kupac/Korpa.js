@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 const Korpa = () => {
 
     const [stavke, setStavke] = useState([]);
-    const[sum,setSum] = useState(0);
     
     useEffect(() => {
         fetchCenovnici();
@@ -30,15 +29,20 @@ const Korpa = () => {
     function removeFromCart(id){
         setStavke(stavke.filter(s => s.id != id))
         KupovinaService.removeStavka(id);
-        console.log(sum)
     }
 
     async function zavrsiKupovinu(){
-        await KupovinaService.createFaktura();
+        try {
+            await KupovinaService.createFaktura();
+            Swal.fire('Успешно',`Успешно потврђена поруџбеница!`,'success').then(function() {
+                window.location.assign("/user-faktura")
+            });
+
+        } catch (e) {
+            console.error("Error while getting api")
+        }
+    
         
-        const sum = stavke.reduce((partialSum, a) => partialSum.cena + a, 0);
-        Swal.fire('Успешно',`Успешно потврђена куповина\nСума: ${sum}`,'success');
-        window.location.assign("/home-customer")
     }
 
 
@@ -66,7 +70,7 @@ const Korpa = () => {
             <tbody>
                 {stavke.length === 0 ?
                     <tr>
-                        <td className='text-center' colSpan={5}> x</td>
+                        <td className='text-center' colSpan={5}>Празна!</td>
                     </tr> :
                     stavke.map((s) => {
                         return (
@@ -74,7 +78,7 @@ const Korpa = () => {
                                 <td>{s.nazivArtikla}</td>
                                 <td>{s.kolicina}</td>
                                 <td>{s.cena}</td>
-                                <td><Button onClick={() => removeFromCart(s.id)}>🗑️</Button></td>
+                                <td><a onClick={() => removeFromCart(s.id)}>x</a></td>
                             </tr>
 
                         )
@@ -85,7 +89,11 @@ const Korpa = () => {
                 }
             </tbody>
         </Table>
-        <Button onClick={()=> zavrsiKupovinu()}>Заврши куповину</Button>
+        {
+            stavke.length > 0 &&
+            <Button onClick={() => zavrsiKupovinu()}>Заврши куповину</Button>
+
+        }
 
 
 

@@ -32,7 +32,9 @@ public class IzlaznaFakturaDTO {
 
     private String statusFakture;
 
-    private Integer kupac;
+    private String kupacImePrezime;
+    private String kupacAdresa;
+    private String kupacBrojTelefona;
 
     private ArrayList<StavkaIzlazneFaktureDTO> stavkaFakture = new ArrayList<>();
 
@@ -44,7 +46,9 @@ public class IzlaznaFakturaDTO {
         this.ukupnaOsnovica = izlaznaFaktura.getUkupnaOsnovica();
         this.ukupanRabat = izlaznaFaktura.getUkupanRabat();
         this.ukupanIznos = izlaznaFaktura.getUkupanIznos();
-        this.kupac = izlaznaFaktura.getKupac().getId();
+        this.kupacImePrezime = izlaznaFaktura.getKupac().getIme() + izlaznaFaktura.getKupac().getPrezime();
+        this.kupacAdresa = izlaznaFaktura.getKupac().getAdresa();
+        this.kupacBrojTelefona = izlaznaFaktura.getKupac().getBrojTelefona();
         this.statusFakture = String.valueOf(izlaznaFaktura.getStatusFakture());
     }
 

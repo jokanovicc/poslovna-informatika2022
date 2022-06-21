@@ -94,6 +94,7 @@ const Magacini = () => {
 
                     }
                 </tbody>
+                <a href={/analytic/}>Аналитике</a>
             </Table>
 
             {kartice.length !== 0 ? <a href={/dobavljanje-robe/ + magacin.id} style={{width:"100%"}}>Наручи нову робу!</a> : <br/>};

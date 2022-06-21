@@ -29,7 +29,7 @@ public class KorisnikDTO {
         this.ime = korisnik.getIme();
         this.prezime = korisnik.getPrezime();
         this.username = korisnik.getUsername();
-        this.email = korisnik.getUsername();
+        this.email = korisnik.getEmail();
         this.brojTelefona = korisnik.getBrojTelefona();
         this.adresa = korisnik.getAdresa();
     }

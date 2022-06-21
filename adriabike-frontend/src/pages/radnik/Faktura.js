@@ -1,48 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import { FakturaService } from '../../services/FaktureService';
 import { useParams } from 'react-router-dom';
-import {  Table, Button } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import { UserService } from '../../services/UserService';
-
+import Swal from 'sweetalert2';
+import { AuthenticationService } from "../../services/AuthenticationService"
 const Faktura = () => {
-    
 
-    const [faktura, setFaktura] = useState({stavkaFakture:[]});
-    const [user, setUser] = useState({});
+
+    const [faktura, setFaktura] = useState({ stavkaFakture: [] });
 
     const { id } = useParams();
 
     useEffect(() => {
         fetchFaktura();
-        fetchKupac();
 
-    }, [])
+    },{})
 
 
     async function fetchFaktura() {
         try {
             const response = await FakturaService.getFaktura(id)
-            console.log(response.data);
             setFaktura(response.data);
         } catch (e) {
             console.error("Error while getting api" + e)
         }
     }
 
-    async function fetchKupac() {
-        try {
-            const response = await UserService.getUser(faktura.kupac);
-            console.log(response.data);
-            setUser(response.data);
-        } catch (e) {
-            console.error("Error while getting api")
-        }
-    }
 
-    async function zavrsiFakturu(){
+    async function zavrsiFakturu() {
         try {
             const response = await FakturaService.endFaktura(id);
             console.log(response.data);
+            if (response.data.potvrdjena == true) {
+                Swal.fire("Kreirano uspesno!", 'Faktura je izdata, trazene kolicine su dostupne', 'success');
+            } else {
+                Swal.fire("Neuspešno", response.data.poruka, 'error');
+            }
         } catch (e) {
             console.error("Error while getting api")
         }
@@ -68,12 +62,11 @@ const Faktura = () => {
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <h5 class="card-title">Купац: {user.ime} {user.prezime}</h5>
+                            <h5 class="card-title">Купац: {faktura.kupacImePrezime}</h5>
                             <div class="card-text">
                                 <ul>
-                                    <li>Адреса: <b>{user.adresa}</b></li>
-                                    <li>Број телефона: <b>{user.brojTelefona}</b></li>
-                                    <li>Мејл: <b>{user.email}</b></li>
+                                    <li>Адреса: <b>{faktura.kupacAdresa}</b></li>
+                                    <li>Број телефона: <b>{faktura.kupacBrojTelefona}</b></li>
                                 </ul>
                             </div>
                         </div>
@@ -82,48 +75,54 @@ const Faktura = () => {
 
                 </div>
                 <Table bordered striped>
-                <thead className='thead-dark'>
-                    <tr>
-                        <th>Назив артикал</th>
-                        <th>Количина</th>
-                        <th>Јединична цена</th>
-                        <th>Проценат ПДВ</th>
-                        <th>Износ ПДВ</th>
-                        <th>Основица</th>
-                        <th>Рабат</th>
-                        <th>Укупно</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {faktura.stavkaFakture.length === 0 ?
+                    <thead className='thead-dark'>
                         <tr>
-                            <td className='text-center' colSpan={5}> Нема фактура!</td>
-                        </tr> :
-                        faktura.stavkaFakture.map((f) => {
-                            return (
-                                <tr key={f.id}>
-                                    <td>{f.nazivArtikla}</td>
-                                    <td>{f.kolicina}</td>
-                                    <td>{f.jedinicnaCena}</td>
-                                    <td>{f.procenatPDV}</td>
-                                    <td>{f.iznosPDV}</td>
-                                    <td>{f.osnovica}</td>
-                                    <td>{f.rabat}</td>
-                                    <td>{f.ukupno}</td>    
-                                                                
-                                </tr>
+                            <th>Назив артикал</th>
+                            <th>Количина</th>
+                            <th>Јединична цена</th>
+                            <th>Проценат ПДВ</th>
+                            <th>Износ ПДВ</th>
+                            <th>Основица</th>
+                            <th>Рабат</th>
+                            <th>Укупно</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {faktura.stavkaFakture.length === 0 ?
+                            <tr>
+                                <td className='text-center' colSpan={5}> Нема фактура!</td>
+                            </tr> :
+                            faktura.stavkaFakture.map((f) => {
+                                return (
+                                    <tr key={f.id}>
+                                        <td>{f.nazivArtikla}</td>
+                                        <td>{f.kolicina}</td>
+                                        <td>{f.jedinicnaCena}</td>
+                                        <td>{f.procenatPDV}</td>
+                                        <td>{f.iznosPDV}</td>
+                                        <td>{f.osnovica}</td>
+                                        <td>{f.rabat}</td>
+                                        <td>{f.ukupno}</td>
 
-                            )
-                        })
+                                    </tr>
 
-                    
+                                )
+                            })
 
-                    }
-                </tbody>
-            </Table>
-            <Button style={{ margin: "10px" }} onClick={zavrsiFakturu} >
-                        Креирај пријемницу
-            </Button>
+
+
+                        }
+                    </tbody>
+                </Table>
+
+                {
+                    AuthenticationService.getRole() == "ROLE_PRODAVAC" &&
+                    <Button style={{ margin: "10px" }} onClick={zavrsiFakturu} >
+                        Издај фактуру
+                    </Button>
+                }
+
+
             </div>
 
         </>

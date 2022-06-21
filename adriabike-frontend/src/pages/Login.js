@@ -54,6 +54,9 @@ const Login = () => {
             <Button className={"button"} style={{marginTop:"20px"}} variant="primary" onClick={login}>
               ПРИЈАВА
             </Button>
+            <Button className={"button"} style={{marginTop:"20px", width:"100%"}} variant="primary" onClick={()=> window.location.assign("register")}>
+              Намате налог? Региструјте се!
+            </Button> 
           </Form>
         </Col>
       </Row>

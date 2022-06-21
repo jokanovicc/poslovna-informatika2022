@@ -58,7 +58,6 @@ const MagacinskaKartica = () => {
                 </tbody>
             </Table>
             <Button style={{width:"100%"}}>Креирај пријемницу</Button>
-            <Button style={{width:"100%", marginTop:"25px"}}>Прегледај аналитику</Button>
 
 
 

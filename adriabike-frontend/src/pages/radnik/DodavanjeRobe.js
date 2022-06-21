@@ -131,7 +131,6 @@ const DodavanjeRobe = () => {
                                     <Form.Label>Продајна цена</Form.Label>
                                     <Form.Control
                                         type="number"
-                                        max="1000"
                                         name="cena"
                                         value={dobavljanjeRobe.cena}
                                         onChange={handleFormInputChange("cena")}
@@ -153,20 +152,6 @@ const DodavanjeRobe = () => {
                                     />
                                 </Form.Group>
 
-                            </Col>
-                            <Col>
-                            <Form.Group>
-                                    <Form.Label>Набавна цена</Form.Label>
-                                    
-                                    <Form.Control
-                                        type="number"
-                                        max="1000"
-                                        name="nabavnaCena"
-                                        value={dobavljanjeRobe.nabavnaCena}
-                                        onChange={handleFormInputChange("nabavnaCena")}
-
-                                    />
-                                </Form.Group>
                             </Col>
                         </Row>
 

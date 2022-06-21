@@ -31,9 +31,11 @@ public class MagacinskaKarticaResponse {
     public MagacinskaKarticaResponse(MagacinskaKartica magacinskaKartica){
 
         this.id = magacinskaKartica.getId();
+        this.pocetnoStanjeVrednost = magacinskaKartica.getPocetnoStanjeVrednost();
         this.pocetnoStanjeKolicina = magacinskaKartica.getPocetnoStanjeKolicina();
         this.prometUlazaKolicina = magacinskaKartica.getPrometUlazaKolicina();
         this.pocetnoStanjeKolicina = magacinskaKartica.getPocetnoStanjeKolicina();
+        this.prometIzlazaKolicina = magacinskaKartica.getPrometIzlazaKolicina();
         this.prometIzlazaVrednost = magacinskaKartica.getPrometIzlazaVrednost();
         this.ukupnaVrednost = magacinskaKartica.getUkupnaVrednost();
         this.prosecnaCena = magacinskaKartica.getProsecnaCena();

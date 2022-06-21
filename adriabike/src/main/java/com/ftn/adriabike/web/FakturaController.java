@@ -1,9 +1,11 @@
 package com.ftn.adriabike.web;
 
 import com.ftn.adriabike.service.FakturaService;
+import com.ftn.adriabike.web.dto.FakturaEndResponse;
 import com.ftn.adriabike.web.dto.IzlaznaFakturaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +31,13 @@ public class FakturaController {
     }
 
     @PostMapping("/{faktura-id}")
-    public ResponseEntity<String> endFaktura(@PathVariable("faktura-id") Integer fakturaId){
-        return ResponseEntity.ok().body(fakturaService.checkKolicina(fakturaId));
+    public ResponseEntity<FakturaEndResponse> endFaktura(@PathVariable("faktura-id") Integer fakturaId, Authentication authentication){
+        return ResponseEntity.ok().body(fakturaService.zavrsiFakturu(fakturaId, authentication));
+    }
+
+    @GetMapping ("/user")
+    public ResponseEntity<List<IzlaznaFakturaDTO>> getFakturaByUser(Authentication authentication){
+        return ResponseEntity.ok().body(fakturaService.getFaktureByUser(authentication));
     }
 
 

@@ -79,7 +79,6 @@ const AnalitikaMagacinskeKartice = () => {
                                 <th>Количина </th>
                                 <th>Вредност</th>
                                 <th>Смер</th>
-                                <th>Назив магацина</th>
 
 
                             </tr>
@@ -97,6 +96,7 @@ const AnalitikaMagacinskeKartice = () => {
                                             <td>{r.kolicina}</td>
                                             <td>{r.vrednost}</td>
                                             <td>{r.smer}</td>
+
                                         </tr>
                                     )
                                 })

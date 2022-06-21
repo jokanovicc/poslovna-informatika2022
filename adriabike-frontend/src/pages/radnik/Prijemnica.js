@@ -40,7 +40,7 @@ const Prijemnica = () => {
     const downloadPdf = () => {
         const doc = new jsPDF();
         let text = 'Prijemnica: ' + prijemnica.broj + "\nDatum: " + prijemnica.datumDokumenta + "\nMagacin: " + prijemnica.magacinNaziv + "\nDobaljena roba:"
-        doc.text(text,13,10);
+        doc.text(text,11,10);
         doc.setFontSize(15);
         doc.autoTable({
             theme:"grid",

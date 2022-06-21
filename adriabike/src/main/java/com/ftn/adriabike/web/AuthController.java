@@ -5,6 +5,7 @@ import com.ftn.adriabike.security.TokenUtils;
 import com.ftn.adriabike.service.KorisnikService;
 import com.ftn.adriabike.web.dto.KorisnikDTO;
 import com.ftn.adriabike.web.dto.LoginDTO;
+import com.ftn.adriabike.web.dto.RegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,8 +19,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 @CrossOrigin("*")
 public class AuthController {
 
@@ -61,6 +65,11 @@ public class AuthController {
     @GetMapping("/user/{user-id}")
     public ResponseEntity<KorisnikDTO> getKorisnikById(@PathVariable("user-id") Integer userId){
         return ResponseEntity.ok().body(korisnikServis.findById(userId));
+    }
+
+    @PostMapping("/register")
+    public void register(@RequestBody RegistrationDTO registrationDTO) throws URISyntaxException {
+        korisnikServis.register(registrationDTO);
     }
 
 

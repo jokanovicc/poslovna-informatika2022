@@ -3,7 +3,8 @@ import AxiosClient from "./clients/AxiosClient"
 export const FakturaService = {
     getNepotvrdjene,
     getFaktura,
-    endFaktura
+    endFaktura,
+    fakturaByUser
 };
 
 
@@ -13,6 +14,10 @@ async function getNepotvrdjene() {
 
 async function getFaktura(id){
     return await AxiosClient.get(`http://localhost:8080/api/faktura/${id}`)
+}
+
+async function fakturaByUser(){
+    return await AxiosClient.get(`http://localhost:8080/api/faktura/user`)
 }
 
 async function endFaktura(id){

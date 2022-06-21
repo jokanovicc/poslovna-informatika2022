@@ -15,10 +15,16 @@ const NavBar = () => {
         A D R I A
       </Navbar.Brand>
       <Nav className="mr-auto">
-        {role == "ROLE_KUPAC" && 
+        {role == "ROLE_KUPAC" &&
+        <>
         <Nav.Link as={Link} to="/cart">
           Корпа
         </Nav.Link>
+        <Nav.Link as={Link} to="/user-faktura">
+          Наруџбенице
+        </Nav.Link>
+        </> 
+
         }
       </Nav>
 

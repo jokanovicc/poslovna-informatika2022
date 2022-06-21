@@ -48,7 +48,7 @@ const HomeCustomer = () => {
             const { id, slika, ukupnaCena, naziv} =
               product;
             return (
-              <Col className="d-flex">
+              <Col style={{paddingTop:"3vh"}} className="d-flex">
                 <Card className="flex-fill" key={id} style={{boxShadow:" 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.20)"}} >
                   <Card.Img style={{maxWidth:"100%", 
 height:"15vw", objectFit:"cover"}} variant="top" src={slika} />

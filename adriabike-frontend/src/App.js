@@ -16,6 +16,8 @@ import HomeRadnik from "./pages/radnik/HomeRadnik";
 import Korpa from "./pages/kupac/Korpa";
 import IzlazneFakture from "./pages/radnik/IzlazneFakture";
 import Faktura from "./pages/radnik/Faktura";
+import FaktureKupca from "./pages/kupac/FaktureKupca";
+import Registracija from "./pages/kupac/Registracija";
 
 function App() {
   return (
@@ -39,6 +41,9 @@ function App() {
           <Route path="/cart" element={<Korpa/>}/>
           <Route path="/fakture" element={<IzlazneFakture/>}/>
           <Route path="/fakture/:id" element={<Faktura/>}/>
+          <Route path="/user-faktura" element={<FaktureKupca/>}/>
+
+          <Route path="/register" element={<Registracija/>}/>
 
         </Routes>
       </Container>

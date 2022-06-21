@@ -5,21 +5,22 @@ export const AuthenticationService = {
   login,
   logout,
   getRole,
+  register
 };
 
 async function login(userCredentials) {
   try {
     const response = await AxiosClient.post(
-      "http://localhost:8080/api/login",
+      "http://localhost:8080/api/auth/login",
       userCredentials
     );
     const decoded_token = TokenService.decodeToken(response.data);
     if (decoded_token) {
       TokenService.setToken(response.data);
       alert(response.data);
-      if(getRole() == "ROLE_KUPAC"){
+      if (getRole() == "ROLE_KUPAC") {
         window.location.assign("/home-customer")
-      }else{
+      } else {
         window.location.assign("/home-radnik")
       }
     } else {
@@ -28,6 +29,13 @@ async function login(userCredentials) {
   } catch (error) {
     console.error(error);
   }
+}
+
+async function register(body) {
+  await AxiosClient.post(
+    "http://localhost:8080/api/auth/register",
+    body
+  );
 }
 
 function logout() {
