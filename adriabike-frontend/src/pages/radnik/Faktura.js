@@ -116,7 +116,7 @@ const Faktura = () => {
                 </Table>
 
                 {
-                    AuthenticationService.getRole() == "ROLE_PRODAVAC" &&
+                    AuthenticationService.getRole() == "ROLE_PRODAVAC" && faktura.statusFakture == 'NEPOTVRDJENA' &&
                     <Button style={{ margin: "10px" }} onClick={zavrsiFakturu} >
                         Издај фактуру
                     </Button>

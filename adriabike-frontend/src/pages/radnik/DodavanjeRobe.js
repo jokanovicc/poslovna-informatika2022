@@ -61,7 +61,9 @@ const DodavanjeRobe = () => {
     const sendRequest = async () => {
         console.log(listaNoveRoba);
         await ArtikliService.dobaviRobu(listaNoveRoba);
-        Swal.fire('Uspešno unešenea roba!', 'U slučaju da roba već postoji u sistemu, količina će biti ažurirana!', "success");
+        Swal.fire('Uspešno unešenea roba!', 'Očivatanje svih prijemnica...', "success").then(
+            ()=>window.location.assign("/warehouse")
+        );
     }
 
     function cleanField() {

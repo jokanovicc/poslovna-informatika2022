@@ -35,25 +35,26 @@ const MagacinskaKartica = () => {
                 <thead className='thead-dark'>
                     <tr>
                         <th>Почетно стање количина</th>
-                        <th>Промет улаза количина</th>
-                        <th>Промет излаза количина</th>
                         <th>Почетно стање вредност</th>
-                        <th>Промет улаза вредност</th>
+                        <th>Промет излаза количина</th>
                         <th>Промет излаза вредност</th>
-                        <th>Укупна вредност</th>
+                        <th>Промет улаза количина</th>
+                        <th>Промет улаза вредност</th>
                         <th>Просечна цена</th>
-
+                        <th>Укупна вредност</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>{kartica.pocetnoStanjeKolicina}</td>
-                        <td>{kartica.prometUlazaKolicina}</td>
-                        <td>{kartica.prometIzlazaKolicina}</td>
                         <td>{kartica.pocetnoStanjeVrednost}</td>
+                        <td>{kartica.prometIzlazaKolicina}</td>
                         <td>{kartica.prometIzlazaVrednost}</td>
-                        <td>{kartica.ukupnaVrednost}</td>
+                        <td>{kartica.prometUlazaKolicina}</td>
+                        <td>{kartica.prometUlazaVrednost}</td>
                         <td>{kartica.prosecnaCena}</td>
+
+                        <td>{kartica.ukupnaVrednost}</td>
                     </tr>
                 </tbody>
             </Table>

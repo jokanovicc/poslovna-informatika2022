@@ -56,6 +56,26 @@ public class ArtikalService {
 
     }
 
+    public void updateArtikal(ArtikalResponseDTO artikliResponse, Integer artikalId){
+        Artikal artikal = artikalRepository.findById(artikalId).orElse(null);
+
+        artikal.setSlika(artikliResponse.getSlika());
+        artikal.setPakovanje(artikliResponse.getPakovanje());
+        artikal.setOpis(artikliResponse.getOpis());
+        artikal.setNaziv(artikliResponse.getNaziv());
+
+        artikalRepository.save(artikal);
+
+
+    }
+
+    public ArtikalResponseDTO getById(Integer artikalId){
+        ArtikalResponseDTO artikal = new ArtikalResponseDTO(artikalRepository.findById(artikalId).orElse(null));
+        artikal.setUkupnaCena(getCenaArtikla(artikalRepository.findById(artikalId).orElse(null)));
+
+        return artikal;
+    }
+
     public Double getCenaArtikla(Artikal a){
         Cenovnik latestCenovnik = cenovnikRepository.findLatest();
         StavkaCenovnika stavkaCenovnika = stavkaCenovnikaRepository.findStavkaCenovnikaByArtikalAndCenovnik(a, latestCenovnik);

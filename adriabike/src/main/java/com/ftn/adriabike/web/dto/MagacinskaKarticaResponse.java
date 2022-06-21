@@ -38,6 +38,7 @@ public class MagacinskaKarticaResponse {
         this.prometIzlazaKolicina = magacinskaKartica.getPrometIzlazaKolicina();
         this.prometIzlazaVrednost = magacinskaKartica.getPrometIzlazaVrednost();
         this.ukupnaVrednost = magacinskaKartica.getUkupnaVrednost();
+        this.prometUlazaVrednost = magacinskaKartica.getPrometUlazaVrednost();
         this.prosecnaCena = magacinskaKartica.getProsecnaCena();
         this.nazivArtikla = magacinskaKartica.getArtikal().getNaziv();
         this.idArtikla = magacinskaKartica.getArtikal().getId();

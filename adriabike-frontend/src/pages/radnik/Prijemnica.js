@@ -79,7 +79,7 @@ const Prijemnica = () => {
                                 <tr key={x.id}>
                                     <td>{x.nazivArtikla}</td>
                                     <td>{x.kolicina}</td>
-                                    <td>{x.nabavnaCena}</td>
+                                    <td>{x.cena}</td>
                                     <td>{x.poreskaStopa} %</td>
                                     <td>{x.vrednost}</td>                                  
                                 </tr>

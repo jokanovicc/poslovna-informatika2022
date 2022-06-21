@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { MagacinService } from '../../services/MagacinService';
-import { Dropdown, DropdownButton, Table, Button} from 'react-bootstrap';
+import { Dropdown, DropdownButton, Table, Button } from 'react-bootstrap';
 
 const Magacini = () => {
 
     const [magacini, setMagacini] = useState([]);
     const [kartice, setKartice] = useState([]);
-    const[magacin,setMagacin] = useState({
-        id:0
+    const [magacin, setMagacin] = useState({
+        id: 0
     })
 
 
@@ -40,10 +40,25 @@ const Magacini = () => {
     return (
         <>
             <h2 className='text-center'>Магацинске картице</h2>
+
             
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Избор магацина
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    {
+                        magacini.map((magacin) => {
+                            return (
+                                <Dropdown.Item onClick={() => fetchKartice(magacin.id)}>{magacin.naziv} // {magacin.lokacija}</Dropdown.Item>
+                            )
+                        })
+                    }
+                </Dropdown.Menu>
+            </Dropdown>
+
             <hr />
-
-
             <Table bordered striped>
                 <thead className='thead-dark'>
                     <tr>
@@ -57,47 +72,36 @@ const Magacini = () => {
                 <tbody>
                     {kartice.length === 0 ?
                         <tr>
-                            <td className='text-center' colSpan={5}>          <Dropdown>
-                                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                    Избор магацина
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu>
-                                    {
-                                        magacini.map((magacin) => {
-                                            return (
-                                                <Dropdown.Item onClick={() => fetchKartice(magacin.id)}>{magacin.naziv} // {magacin.lokacija}</Dropdown.Item>
-                                            )
-                                        })
-                                    }
-                                </Dropdown.Menu>
-                            </Dropdown></td>
+                            <td className='text-center' colSpan={5}>Одабери магацин </td>
                         </tr> :
                         kartice.map((k) => {
                             return (
                                 <tr key={k.id}>
-                                    <td>{k.nazivArtikla}</td>
+                                    <td><a href={/update-artikal/ + k.idArtikla}>{k.nazivArtikla}</a></td>
                                     <td>{k.poslovnaGodina}</td>
                                     <td>{k.magacinMesto}</td>
                                     <td>{k.ukupnaVrednost}</td>
                                     <td>
                                         <a href={/card/ + k.id}>Детаљи</a>
                                     </td>
-                                    <td></td>    
-                                                                
                                 </tr>
 
                             )
                         })
 
-                    
+
 
                     }
                 </tbody>
-                <a href={/analytic/}>Аналитике</a>
             </Table>
+            {
+                kartice.length !== 0 &&
+                <Button style={{width:"100%"}} onClick={() => window.location.assign("/dobavljanje-robe/" +magacin.id)} variant="primary"> Добави нову робу!</Button>
 
-            {kartice.length !== 0 ? <a href={/dobavljanje-robe/ + magacin.id} style={{width:"100%"}}>Наручи нову робу!</a> : <br/>};
+            }
+            <Button style={{width:"100%"}} onClick={() => window.location.assign("/analytic")} variant="success"> Аналитике магацинских картица</Button>
+
+
         </>
     )
 }

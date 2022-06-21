@@ -37,6 +37,17 @@ public class ArtikalController {
                 .body(artikalService.findAll());
     }
 
+    @PutMapping("/{id}/update")
+    public void updateArtikal(@PathVariable("id") Integer artikalId, @RequestBody ArtikalResponseDTO artikalResponseDTO){
+        artikalService.updateArtikal(artikalResponseDTO, artikalId);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ArtikalResponseDTO> getById(@PathVariable("id") Integer artikalId){
+        return ResponseEntity
+                .ok()
+                .body(artikalService.getById(artikalId));      }
+
     @PostMapping
     public ResponseEntity dodajRobu(@RequestBody List<DobavljanjeNoveRobeDTO> dobavljanjeNoveRobeDTO) throws URISyntaxException {
         artikalService.dobavljenjeNoveRobe(dobavljanjeNoveRobeDTO);

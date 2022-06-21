@@ -6,7 +6,9 @@ export const ArtikliService = {
     getPoreske,
     getPrijemnice,
     getPrijemniceById,
-    getCenovici
+    getCenovici,
+    getById,
+    update
 }
 
 async function getAll(){
@@ -19,6 +21,14 @@ async function dobaviRobu(novaRoba){
 
 async function getPoreske(){
     return await AxiosClient.get("http://localhost:8080/api/articles/poreske-kategorije");
+}
+
+async function update(id, body){
+    return await AxiosClient.put(`http://localhost:8080/api/articles/${id}/update`, body);
+}
+
+async function getById(id){
+    return await AxiosClient.get(`http://localhost:8080/api/articles/${id}`);
 }
 
 async function getPrijemnice(pageNumber){

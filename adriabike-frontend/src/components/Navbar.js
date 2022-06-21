@@ -34,7 +34,7 @@ const NavBar = () => {
         {TokenService.getToken() ? (
           <>
                 <NavDropdown title="Профил" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="profile">Приказ профила</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/profile">Приказ профила</NavDropdown.Item>
                 <NavDropdown.Item href="#action4">Ажурирање профила</NavDropdown.Item>
               </NavDropdown>
         <Button style={{marginLeft:"2vw"}} onClick={() => AuthenticationService.logout()}>Log out</Button>
