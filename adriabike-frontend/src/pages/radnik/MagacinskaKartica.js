@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { MagacinService } from '../../services/MagacinService';
 import { Button, Dropdown, DropdownButton, Table } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import AnalitikaKartice from './AnalitikaKartice';
 
 
 const MagacinskaKartica = () => {
@@ -59,6 +60,8 @@ const MagacinskaKartica = () => {
                 </tbody>
             </Table>
             <Button style={{width:"100%"}}>Креирај пријемницу</Button>
+
+            <AnalitikaKartice kartica={kartica.id}/>
 
 
 

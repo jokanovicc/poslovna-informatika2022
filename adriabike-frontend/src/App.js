@@ -22,6 +22,7 @@ import Profile from "./pages/Profile";
 import UpdateArtikal from "./pages/radnik/UpdateArtikal";
 import MagaciniAdmin from "./pages/admin/MagaciniAdmin";
 import PoreskeKategorije from "./pages/admin/PoreskeKategorije";
+import AnalitikaKartice from "./pages/radnik/AnalitikaKartice";
 
 function App() {
   return (

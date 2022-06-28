@@ -13,4 +13,8 @@ public interface PrometMagacinskeKarticeRepository extends JpaRepository<PrometM
     List<PrometMagacinskeKartice> findBetweenDates(Date dateStart, Date dateEnd);
 
 
+    @Query(value="select * from promet_magacinske_kartice where datum >= ?1 and datum <= ?2 and magacinska_kartica_id = ?3 group by id", nativeQuery = true)
+    List<PrometMagacinskeKartice> findBetweenDates(Date dateStart, Date dateEnd, Integer magacinskaKartica);
+
+
 }

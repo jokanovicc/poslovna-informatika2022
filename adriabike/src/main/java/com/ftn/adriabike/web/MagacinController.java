@@ -3,6 +3,7 @@ package com.ftn.adriabike.web;
 import com.ftn.adriabike.model.Magacin;
 import com.ftn.adriabike.service.MagacinService;
 import com.ftn.adriabike.service.PrometMagacinskeKarticeService;
+import com.ftn.adriabike.web.dto.AnalyticDTO;
 import com.ftn.adriabike.web.dto.MagacinResponseDTO;
 import com.ftn.adriabike.web.dto.MagacinskaKarticaResponse;
 import com.ftn.adriabike.web.dto.PrometMagacinskeKarticeDTO;
@@ -48,12 +49,22 @@ public class MagacinController {
                 .body(magacinService.findOne(id));
     }
 
-    @GetMapping("/analytics/{dateStart}/{dateEnd}")
-    public ResponseEntity<List<PrometMagacinskeKarticeDTO>> getAnalyticsByDate(@PathVariable("dateStart")Date dateStart, @PathVariable("dateEnd")Date dateEnd){
+    @PostMapping("/analytics")
+    public ResponseEntity<List<PrometMagacinskeKarticeDTO>> getAnalyticsByDate(@RequestBody AnalyticDTO analytic){
+
         return ResponseEntity
                 .ok()
-                .body(prometMagacinskeKarticeService.getAnalitika(dateStart, dateEnd));
+                .body(prometMagacinskeKarticeService.getAnalitika(analytic));
     }
+
+
+    @GetMapping("/{id}/analytics/{dateStart}/{dateEnd}")
+    public ResponseEntity<List<PrometMagacinskeKarticeDTO>> getAnalyticsByDateKartica(@PathVariable("id") Integer id,@PathVariable("dateStart")Date dateStart, @PathVariable("dateEnd")Date dateEnd){
+        return ResponseEntity
+                .ok()
+                .body(prometMagacinskeKarticeService.getAnalitikaByKartica(dateStart, dateEnd, id));
+    }
+
 
     @PostMapping()
     public ResponseEntity createMagacin(@RequestBody MagacinResponseDTO magacinResponseDTO) throws URISyntaxException {

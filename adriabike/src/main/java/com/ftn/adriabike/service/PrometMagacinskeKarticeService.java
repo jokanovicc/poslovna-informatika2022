@@ -5,6 +5,7 @@ import com.ftn.adriabike.model.PrometMagacinskeKartice;
 import com.ftn.adriabike.model.Smer;
 import com.ftn.adriabike.model.StavkaFakture;
 import com.ftn.adriabike.repository.PrometMagacinskeKarticeRepository;
+import com.ftn.adriabike.web.dto.AnalyticDTO;
 import com.ftn.adriabike.web.dto.DobavljanjeNoveRobeDTO;
 import com.ftn.adriabike.web.dto.PrometMagacinskeKarticeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class PrometMagacinskeKarticeService {
@@ -58,10 +60,25 @@ public class PrometMagacinskeKarticeService {
 
     }
 
-    public List<PrometMagacinskeKarticeDTO> getAnalitika(Date dateStart, Date dateEnd){
-
+    public List<PrometMagacinskeKarticeDTO> getAnalitika(AnalyticDTO analyticDTO){
+        System.out.println(analyticDTO);
         List<PrometMagacinskeKarticeDTO> prometMagacinskeKartice = new ArrayList<>();
-        for(PrometMagacinskeKartice p: prometMagacinskeKarticeRepository.findBetweenDates(dateStart, dateEnd)){
+        for(PrometMagacinskeKartice p: prometMagacinskeKarticeRepository.findBetweenDates(analyticDTO.getStartDate(), analyticDTO.getEndDate())){
+            System.out.println("aaa" + p.getSmer().toString());
+            if(Objects.equals(analyticDTO.getSmer(), p.getSmer().toString())){
+                prometMagacinskeKartice.add(new PrometMagacinskeKarticeDTO(p));
+            }else if(Objects.equals(analyticDTO.getSmer(), "")){
+                prometMagacinskeKartice.add(new PrometMagacinskeKarticeDTO(p));
+            }
+
+        }
+        return prometMagacinskeKartice;
+    }
+
+
+    public List<PrometMagacinskeKarticeDTO> getAnalitikaByKartica(Date dateStart, Date dateEnd, Integer kartica){
+        List<PrometMagacinskeKarticeDTO> prometMagacinskeKartice = new ArrayList<>();
+        for(PrometMagacinskeKartice p: prometMagacinskeKarticeRepository.findBetweenDates(dateStart, dateEnd, kartica)){
             prometMagacinskeKartice.add(new PrometMagacinskeKarticeDTO(p));
         }
         return prometMagacinskeKartice;
