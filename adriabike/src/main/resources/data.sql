@@ -9,9 +9,12 @@ INSERT INTO magacin(lokacija, naziv, preduzece_id) VALUES ('Glavni Trg, Titel', 
 
 INSERT into poslovna_godina(godina, zakljucena, preduzece_id) VALUES (2022,false, 1);
 
-INSERT INTO poreska_stopa(datum_stupanja, procenatpdv) values ('2012-08-25',25);
-INSERT INTO poreska_kategorija(naziv, poreska_stopa_id) values ('PDV za prevozna sredstva', 1);
-INSERT INTO poreska_kategorija(naziv, poreska_stopa_id) values ('PDV za periferije', 1);
+INSERT INTO poreska_kategorija(naziv) values ('PDV za prevozna sredstva');
+INSERT INTO poreska_kategorija(naziv) values ('PDV za periferije');
+
+INSERT INTO poreska_stopa(datum_stupanja, procenatpdv,poreska_kategorija_id) values ('2012-08-25',20,1);
+INSERT INTO poreska_stopa(datum_stupanja, procenatpdv,poreska_kategorija_id) values ('2017-02-20',25,1);
+INSERT INTO poreska_stopa(datum_stupanja, procenatpdv,poreska_kategorija_id) values ('2012-08-25',20,2);
 
 
 INSERT INTO artikal(naziv, opis, pakovanje, slika, poreska_kategorija_id) VALUES ('Adria Nomad', 'MTB Bike 2022', 1, 'https://www.bcgroup-online.com/upload/b/38470-adria-nomad-26-crno-crveno.jpg',1);

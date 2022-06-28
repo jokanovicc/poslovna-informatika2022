@@ -25,6 +25,5 @@ public class StavkaPrometnogDokumentaDTO {
         this.cena = stavkaPrometnogDokumenta.getCena();
         this.vrednost = stavkaPrometnogDokumenta.getVrednost();
         this.nazivArtikla = stavkaPrometnogDokumenta.getArtikal().getNaziv();
-        this.poreskaStopa = stavkaPrometnogDokumenta.getArtikal().getPoreskaKategorija().getPoreskaStopa().getProcenatPDV();
     }
 }

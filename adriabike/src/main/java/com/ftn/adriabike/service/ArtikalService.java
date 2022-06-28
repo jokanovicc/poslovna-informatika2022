@@ -33,6 +33,9 @@ public class ArtikalService {
     @Autowired
     private MagacinskaKarticaService magacinskaKarticaService;
 
+    @Autowired
+    private PoreskaStopaRepository poreskaStopaRepository;
+
     public List<ArtikalResponseDTO> findAll() {
         List<Artikal> artikli = artikalRepository.findAll();
         List<ArtikalResponseDTO> artikliResponse = new ArrayList<ArtikalResponseDTO>();
@@ -44,7 +47,9 @@ public class ArtikalService {
 
                 ArtikalResponseDTO artikalResponseDTO = new ArtikalResponseDTO(a);
                 StavkaCenovnika stavkaCenovnika = stavkaCenovnikaRepository.findStavkaCenovnikaByArtikalAndCenovnik(a, latestCenovnik);
-                Double cenaSaPorezom = stavkaCenovnika.getCena() + ((stavkaCenovnika.getCena() * a.getPoreskaKategorija().getPoreskaStopa().getProcenatPDV()) / 100);
+                System.out.println("######" + a);
+                PoreskaStopa poreskaStopa = poreskaStopaRepository.findLatestPoreskaStopa(a.getPoreskaKategorija().getId());
+                Double cenaSaPorezom = stavkaCenovnika.getCena() + ((stavkaCenovnika.getCena() * poreskaStopa.getProcenatPDV()) / 100);
                 artikalResponseDTO.setUkupnaCena(cenaSaPorezom);
                 artikliResponse.add(artikalResponseDTO);
 
@@ -79,8 +84,9 @@ public class ArtikalService {
     public Double getCenaArtikla(Artikal a){
         Cenovnik latestCenovnik = cenovnikRepository.findLatest();
         StavkaCenovnika stavkaCenovnika = stavkaCenovnikaRepository.findStavkaCenovnikaByArtikalAndCenovnik(a, latestCenovnik);
+        PoreskaStopa poreskaStopa = poreskaStopaRepository.findLatestPoreskaStopa(a.getPoreskaKategorija().getId());
 
-        return stavkaCenovnika.getCena() + ((stavkaCenovnika.getCena() * a.getPoreskaKategorija().getPoreskaStopa().getProcenatPDV()) / 100);
+        return stavkaCenovnika.getCena() + ((stavkaCenovnika.getCena() * poreskaStopa.getProcenatPDV()) / 100);
     }
 
     public Double getCenaArtiklaOsnovica(Artikal a){

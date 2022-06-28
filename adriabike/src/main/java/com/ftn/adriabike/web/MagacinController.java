@@ -1,5 +1,6 @@
 package com.ftn.adriabike.web;
 
+import com.ftn.adriabike.model.Magacin;
 import com.ftn.adriabike.service.MagacinService;
 import com.ftn.adriabike.service.PrometMagacinskeKarticeService;
 import com.ftn.adriabike.web.dto.MagacinResponseDTO;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Date;
 import java.util.List;
 
@@ -52,6 +55,13 @@ public class MagacinController {
                 .body(prometMagacinskeKarticeService.getAnalitika(dateStart, dateEnd));
     }
 
+    @PostMapping()
+    public ResponseEntity createMagacin(@RequestBody MagacinResponseDTO magacinResponseDTO) throws URISyntaxException {
+        magacinService.create(magacinResponseDTO);
+        return ResponseEntity
+                .created(new URI("/api/warehouse/"))
+                .body(magacinService.getAll());
+    }
 
 
 }

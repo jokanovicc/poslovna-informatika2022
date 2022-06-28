@@ -6,6 +6,7 @@ import com.ftn.adriabike.model.MagacinskaKartica;
 import com.ftn.adriabike.repository.ArtikalRepository;
 import com.ftn.adriabike.repository.MagacinRepository;
 import com.ftn.adriabike.repository.MagacinskaKarticaRepository;
+import com.ftn.adriabike.repository.PreduzeceRepository;
 import com.ftn.adriabike.web.dto.DobavljanjeNoveRobeDTO;
 import com.ftn.adriabike.web.dto.MagacinResponseDTO;
 import com.ftn.adriabike.web.dto.MagacinskaKarticaResponse;
@@ -26,6 +27,9 @@ public class MagacinService {
 
     @Autowired
     private ArtikalRepository artikalRepository;
+
+    @Autowired
+    private PreduzeceRepository preduzeceRepository;
 
 
     public List<MagacinResponseDTO> getAll(){
@@ -49,6 +53,16 @@ public class MagacinService {
 
     public MagacinskaKarticaResponse findOne(Integer id){
         return new MagacinskaKarticaResponse(magacinskaKarticaRepository.findById(id).orElse(null));
+    }
+
+
+    public void create(MagacinResponseDTO magacinResponseDTO){
+        Magacin magacin = new Magacin();
+        magacin.setPreduzece(preduzeceRepository.findById(1).orElse(null));
+        magacin.setLokacija(magacinResponseDTO.getLokacija());
+        magacin.setNaziv(magacinResponseDTO.getNaziv());
+
+        magacinRepository.save(magacin);
     }
 
 

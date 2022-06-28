@@ -1,6 +1,7 @@
 package com.ftn.adriabike.service;
 
 import com.ftn.adriabike.model.Artikal;
+import com.ftn.adriabike.model.PoreskaStopa;
 import com.ftn.adriabike.model.Prijemnica;
 import com.ftn.adriabike.model.StavkaPrometnogDokumenta;
 import com.ftn.adriabike.repository.ArtikalRepository;
@@ -34,6 +35,9 @@ public class PrijemnicaService {
 
     @Autowired
     private ArtikalRepository artikalRepository;
+
+    @Autowired
+    private PoreskaKategorijaService poreskaKategorijaService;
 
     void createPrijemnica(List<DobavljanjeNoveRobeDTO> dobavljanjeNoveRobeDTO){
 
@@ -72,7 +76,9 @@ public class PrijemnicaService {
         PrijemnicaResponseDTO prijemnicaResponseDTO = new PrijemnicaResponseDTO(prijemnica);
 
         for(StavkaPrometnogDokumenta stavka: stavkaPrometnogDokumentaRepository.findAllByPrijemnica(prijemnica)){
-            prijemnicaResponseDTO.getStavkaPrometnogDokumenta().add(new StavkaPrometnogDokumentaDTO(stavka));
+            StavkaPrometnogDokumentaDTO stavkaPrometnogDokumenta = new StavkaPrometnogDokumentaDTO(stavka);
+            stavkaPrometnogDokumenta.setPoreskaStopa(poreskaKategorijaService.getPoreskaStopa(stavka.getArtikal()));
+            prijemnicaResponseDTO.getStavkaPrometnogDokumenta().add(stavkaPrometnogDokumenta);
         }
 
         return prijemnicaResponseDTO;
@@ -90,7 +96,9 @@ public class PrijemnicaService {
             prijemnicaResponseDTO.add(response);
 
             for(StavkaPrometnogDokumenta stavka: stavkaPrometnogDokumentaRepository.findAll()){
-                response.getStavkaPrometnogDokumenta().add(new StavkaPrometnogDokumentaDTO(stavka));
+                StavkaPrometnogDokumentaDTO stavkaPrometnogDokumenta = new StavkaPrometnogDokumentaDTO(stavka);
+                stavkaPrometnogDokumenta.setPoreskaStopa(poreskaKategorijaService.getPoreskaStopa(stavka.getArtikal()));
+                response.getStavkaPrometnogDokumenta().add(stavkaPrometnogDokumenta);
             }
 
         }

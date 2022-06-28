@@ -20,6 +20,8 @@ import FaktureKupca from "./pages/kupac/FaktureKupca";
 import Registracija from "./pages/kupac/Registracija";
 import Profile from "./pages/Profile";
 import UpdateArtikal from "./pages/radnik/UpdateArtikal";
+import MagaciniAdmin from "./pages/admin/MagaciniAdmin";
+import PoreskeKategorije from "./pages/admin/PoreskeKategorije";
 
 function App() {
   return (
@@ -48,6 +50,8 @@ function App() {
           <Route path="/register" element={<Registracija/>}/>
           <Route path="/profile" element={<Profile/>}/>
           <Route path="/update-artikal/:id" element={<UpdateArtikal/>}/>
+          <Route path="/admin-magacini" element={<MagaciniAdmin/>}/>
+          <Route path="/poreske-kategorije" element={<PoreskeKategorije/>}/>
 
         </Routes>
       </Container>

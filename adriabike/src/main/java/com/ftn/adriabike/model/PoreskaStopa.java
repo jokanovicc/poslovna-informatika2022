@@ -20,4 +20,7 @@ public class PoreskaStopa {
     private Integer procenatPDV;
     private LocalDate datumStupanja;
 
+    @ManyToOne
+    private PoreskaKategorija poreskaKategorija;
+
 }

@@ -18,7 +18,6 @@ public class PoreskaKategorija {
 
     private String naziv;
 
-    @ManyToOne
-    private PoreskaStopa poreskaStopa;
+
 
 }

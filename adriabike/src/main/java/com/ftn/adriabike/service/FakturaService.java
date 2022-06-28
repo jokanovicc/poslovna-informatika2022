@@ -48,6 +48,9 @@ public class FakturaService{
     @Autowired
     private MagacinskaKarticaService magacinskaKarticaService;
 
+    @Autowired
+    private PoreskaKategorijaService poreskaKategorijaService;
+
 
 
 
@@ -79,7 +82,7 @@ public class FakturaService{
             stavkaFakture.setRabat(0.0);
             stavkaFakture.setOsnovica(artikalService.getCenaArtiklaOsnovica(artikal));
 
-            stavkaFakture.setProcenatPDV(artikal.getPoreskaKategorija().getPoreskaStopa().getProcenatPDV());
+            stavkaFakture.setProcenatPDV(poreskaKategorijaService.getPoreskaStopa(artikal));
             stavkaFakture.setIznosPDV(stavkaFakture.getJedinicnaCena() - stavkaFakture.getOsnovica());
 
             stavkaFakture.setUkupno(stavkaFakture.getKolicina() * stavkaFakture.getJedinicnaCena());
