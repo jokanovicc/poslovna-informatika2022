@@ -56,9 +56,33 @@ public class MagacinskaKarticaService {
 
     }
 
+    public void createPocetnoStanje(){
+
+        for(MagacinskaKartica magacinskaKartica: magacinskaKarticaRepository.findProslogodinjeKartice()){
+
+
+            MagacinskaKartica novaMagacinskaKartica = new MagacinskaKartica();
+            novaMagacinskaKartica.setPocetnoStanjeKolicina(magacinskaKartica.getPrometUlazaKolicina() - magacinskaKartica.getPrometIzlazaKolicina());
+            novaMagacinskaKartica.setPocetnoStanjeVrednost((magacinskaKartica.getPrometUlazaKolicina() - magacinskaKartica.getPrometIzlazaKolicina()) * artikalService.getCenaArtiklaOsnovica(magacinskaKartica.getArtikal()));
+            novaMagacinskaKartica.setProsecnaCena(magacinskaKartica.getPocetnoStanjeVrednost());
+
+            novaMagacinskaKartica.setMagacin(magacinskaKartica.getMagacin());
+            novaMagacinskaKartica.setUkupnaVrednost(novaMagacinskaKartica.getPocetnoStanjeVrednost());
+            novaMagacinskaKartica.setPrometUlazaVrednost(0.0);
+            novaMagacinskaKartica.setPrometIzlazaVrednost(0.0);
+            novaMagacinskaKartica.setPrometIzlazaKolicina(0);
+            novaMagacinskaKartica.setPrometUlazaKolicina(novaMagacinskaKartica.getPocetnoStanjeKolicina());
+            novaMagacinskaKartica.setArtikal(magacinskaKartica.getArtikal());
+            novaMagacinskaKartica.setPoslovnaGodina(poslovnaGodinaRepository.findLatest());
+
+            magacinskaKarticaRepository.save(novaMagacinskaKartica);
+
+        }
+    }
+
     public void magacinskaKarticaIzlaz(StavkaFakture stavkaFakture){
 
-        MagacinskaKartica magacinskaKartica = magacinskaKarticaRepository.findFirstByArtikal(stavkaFakture.getArtikal());
+        MagacinskaKartica magacinskaKartica = magacinskaKarticaRepository.findFirstByArtikal(stavkaFakture.getArtikal().getId());
         Double cena = artikalService.getCenaArtiklaOsnovica(stavkaFakture.getArtikal()) * stavkaFakture.getKolicina();
         magacinskaKartica.setPrometIzlazaKolicina(magacinskaKartica.getPrometIzlazaKolicina() + stavkaFakture.getKolicina());
         magacinskaKartica.setPrometIzlazaVrednost(magacinskaKartica.getPrometIzlazaVrednost() + cena);

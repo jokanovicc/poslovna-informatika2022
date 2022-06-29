@@ -2,6 +2,7 @@ package com.ftn.adriabike.web;
 
 import com.ftn.adriabike.model.Magacin;
 import com.ftn.adriabike.service.MagacinService;
+import com.ftn.adriabike.service.MagacinskaKarticaService;
 import com.ftn.adriabike.service.PrometMagacinskeKarticeService;
 import com.ftn.adriabike.web.dto.AnalyticDTO;
 import com.ftn.adriabike.web.dto.MagacinResponseDTO;
@@ -25,6 +26,9 @@ public class MagacinController {
     private MagacinService magacinService;
     @Autowired
     private PrometMagacinskeKarticeService prometMagacinskeKarticeService;
+
+    @Autowired
+    private MagacinskaKarticaService magacinskaKarticaService;
 
 
     @GetMapping
@@ -72,6 +76,11 @@ public class MagacinController {
         return ResponseEntity
                 .created(new URI("/api/warehouse/"))
                 .body(magacinService.getAll());
+    }
+
+    @PostMapping("/otvaranje-stanja")
+    public void otvoriStanje(){
+        magacinskaKarticaService.createPocetnoStanje();
     }
 
 

@@ -6,7 +6,8 @@ export const MagacinService = {
     getMagacinskaKartica,
     getAnalitikaBetweenDates,
     create,
-    getAnalitikaBetweenDatesKartica
+    getAnalitikaBetweenDatesKartica,
+    createPocetnoStanje
 }
 
 async function getAll(){
@@ -32,6 +33,9 @@ async function getAnalitikaBetweenDatesKartica(dateStart, dateEnd, kartica){
 
 async function create(body){
     return await AxiosClient.post("http://localhost:8080/api/warehouse", body)
+}
+async function createPocetnoStanje(){
+    return await AxiosClient.post("http://localhost:8080/api/warehouse/otvaranje-stanja");
 }
 
 

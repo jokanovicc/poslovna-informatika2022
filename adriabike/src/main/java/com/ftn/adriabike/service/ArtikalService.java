@@ -37,12 +37,12 @@ public class ArtikalService {
     private PoreskaStopaRepository poreskaStopaRepository;
 
     public List<ArtikalResponseDTO> findAll() {
-        List<Artikal> artikli = artikalRepository.findAll();
+        List<Artikal> artikli = artikalRepository.getAll();
         List<ArtikalResponseDTO> artikliResponse = new ArrayList<ArtikalResponseDTO>();
         Cenovnik latestCenovnik = cenovnikRepository.findLatest();
 
         for (Artikal a : artikli) {
-            MagacinskaKartica magacinskaKartica = magacinskaKarticaRepository.findFirstByArtikal(a);
+            MagacinskaKartica magacinskaKartica = magacinskaKarticaRepository.findFirstByArtikal(a.getId());
             if (magacinskaKartica.getPrometUlazaKolicina() > magacinskaKartica.getPrometIzlazaKolicina()) {
 
                 ArtikalResponseDTO artikalResponseDTO = new ArtikalResponseDTO(a);

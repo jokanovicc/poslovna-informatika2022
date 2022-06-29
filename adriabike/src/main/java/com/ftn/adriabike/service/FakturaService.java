@@ -164,7 +164,7 @@ public class FakturaService{
         List<Boolean> list = new ArrayList<>();
 
         for(StavkaFakture stavkaFakture: stavkaFaktureRepository.findAllByIzlaznaFaktura(izlaznaFaktura)){
-            MagacinskaKartica magacinskaKartica =magacinskaKarticaRepository.findFirstByArtikal(stavkaFakture.getArtikal());
+            MagacinskaKartica magacinskaKartica =magacinskaKarticaRepository.findFirstByArtikal(stavkaFakture.getArtikal().getId());
             Integer kolicina = magacinskaKartica.getPocetnoStanjeKolicina() + magacinskaKartica.getPrometUlazaKolicina() - magacinskaKartica.getPrometIzlazaKolicina();
 
             if(stavkaFakture.getKolicina() < kolicina){
