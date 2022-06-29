@@ -1,4 +1,4 @@
-INSERT INTO korisnik(adresa, broj_telefona, email, ime, lozinka, prezime, roles, username) VALUES ('Temisvarski drum 51', '0653122','vladimirjokanovic00@gmail.com', 'Janko','$2a$12$T6pecbhNSJMX8JKu/yJmcuThLjTQwiu8lEot0sNQulKiRHLEq2cCy', 'Markovic','KUPAC','janko');
+INSERT INTO korisnik(adresa, broj_telefona, email, ime, lozinka, prezime, roles, username) VALUES ('Temisvarski drum 51', '0653122','vladimirjokanovicc@gmail.com', 'Janko','$2a$12$T6pecbhNSJMX8JKu/yJmcuThLjTQwiu8lEot0sNQulKiRHLEq2cCy', 'Markovic','KUPAC','janko');
 INSERT INTO korisnik(adresa, broj_telefona, email, ime, lozinka, prezime, roles, username) VALUES ('Bulevar Republike 21', '063131','mitar@gmail.com', 'Mitar','$2y$10$hot02.nCHwYwTBb6suq21uz1I/4P8EiSlEkWOzUxN5JHWgaNgF0gC', 'Mitrovic','PRODAVAC','mitar');
 
 

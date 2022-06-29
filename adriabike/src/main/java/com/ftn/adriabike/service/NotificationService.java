@@ -29,6 +29,7 @@ public class NotificationService {
         mail.setSubject("ADRIA BIKE DOO - Novi Sad: Поружбина број: "+brojPorudzbine);
         mail.setText(subject);
 
+
         javaMailSender.send(mail);
 
     }

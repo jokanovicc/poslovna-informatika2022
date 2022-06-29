@@ -3,6 +3,7 @@ package com.ftn.adriabike.web;
 import com.ftn.adriabike.service.FakturaService;
 import com.ftn.adriabike.web.dto.FakturaEndResponse;
 import com.ftn.adriabike.web.dto.IzlaznaFakturaDTO;
+import com.ftn.adriabike.web.dto.PorukaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -39,6 +40,15 @@ public class FakturaController {
     public ResponseEntity<List<IzlaznaFakturaDTO>> getFakturaByUser(Authentication authentication){
         return ResponseEntity.ok().body(fakturaService.getFaktureByUser(authentication));
     }
+
+
+    @PostMapping ("/send-poruka")
+    public void posaljiPoruku(@RequestBody PorukaDTO poruka){
+        fakturaService.posaljiPoruku(poruka);
+    }
+
+
+
 
 
 }

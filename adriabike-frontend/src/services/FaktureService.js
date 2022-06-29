@@ -4,7 +4,8 @@ export const FakturaService = {
     getNepotvrdjene,
     getFaktura,
     endFaktura,
-    fakturaByUser
+    fakturaByUser,
+    sendPoruka
 };
 
 
@@ -22,5 +23,10 @@ async function fakturaByUser(){
 
 async function endFaktura(id){
     return await AxiosClient.post(`http://localhost:8080/api/faktura/${id}`)
+}
+
+async function sendPoruka(poruka){
+    return await AxiosClient.post("http://localhost:8080/api/faktura/send-poruka", poruka);
+
 }
 

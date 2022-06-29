@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FakturaService } from '../../services/FaktureService';
 import { useParams } from 'react-router-dom';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Modal, Form } from 'react-bootstrap';
 import { UserService } from '../../services/UserService';
 import Swal from 'sweetalert2';
 import { AuthenticationService } from "../../services/AuthenticationService"
@@ -10,12 +10,24 @@ const Faktura = () => {
 
     const [faktura, setFaktura] = useState({ stavkaFakture: [] });
 
+    const [poruka, setPoruka] = useState({
+        poruka: "",
+        fakturaId: 0
+    })
+
     const { id } = useParams();
 
     useEffect(() => {
         fetchFaktura();
 
-    },{})
+    }, {})
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => {
+      setShow(true);
+    }
 
 
     async function fetchFaktura() {
@@ -27,6 +39,18 @@ const Faktura = () => {
         }
     }
 
+    const handleFormInputChange = (name) => (event) => {
+        const val = event.target.value;
+        setPoruka({ ...poruka, [name]: val });
+      };
+
+    
+      async function sendPoruka(){
+        poruka.fakturaId = id;
+        return await FakturaService.sendPoruka(poruka);
+        handleClose();
+      }
+
 
     async function zavrsiFakturu() {
         try {
@@ -35,7 +59,7 @@ const Faktura = () => {
             if (response.data.potvrdjena == true) {
                 Swal.fire("Kreirano uspesno!", 'Faktura je izdata, trazene kolicine su dostupne', 'success');
             } else {
-                Swal.fire("Neuspešno", response.data.poruka, 'error');
+                Swal.fire("Neuspešno", response.data.poruka, 'error').then(handleShow());
             }
         } catch (e) {
             console.error("Error while getting api")
@@ -124,6 +148,41 @@ const Faktura = () => {
 
 
             </div>
+
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Порука за купца</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+
+                    <Form>
+
+                        <Form.Group>
+                            <Form.Label>Poruka</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="poruka"
+                                value={poruka.poruka}
+                                onChange={handleFormInputChange("poruka")}
+
+
+                            />
+                        </Form.Group>
+
+                    </Form>
+                </Modal.Body>
+
+
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={() => sendPoruka()}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
         </>
     )

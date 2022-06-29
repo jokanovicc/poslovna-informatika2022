@@ -4,6 +4,7 @@ import com.ftn.adriabike.model.*;
 import com.ftn.adriabike.repository.*;
 import com.ftn.adriabike.web.dto.FakturaEndResponse;
 import com.ftn.adriabike.web.dto.IzlaznaFakturaDTO;
+import com.ftn.adriabike.web.dto.PorukaDTO;
 import com.ftn.adriabike.web.dto.StavkaIzlazneFaktureDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -99,7 +100,7 @@ public class FakturaService{
         izlaznaFaktura.setUkupanPDV(stavkaFaktureRepository.getUkupnoPDV(izlaznaFaktura.getId()));
 
         String subject = "Поштовани/а,\nХвала што купујете код нас.\nСтатус ваше поруџбине можете проверити кроз Ваш налог на сајту.\nУ колико је наручена роба доступна и спремна за реализацију наше сарадње добићете имејл са потврдом да се иста може испоручити или преузети. Тренутни статус ваше поруџбине је: NA ČEKANJU";
-       // notificationService.sendNotification(current, subject, izlaznaFaktura.getBrojFakture());
+        //notificationService.sendNotification(current, subject, izlaznaFaktura.getBrojFakture());
 
         korpaRepository.delete(korpa);
 
@@ -202,14 +203,18 @@ public class FakturaService{
             notificationService.sendNotification(current, subject, izlaznaFaktura.getBrojFakture());
         }else{
             izlaznaFaktura.setStatusFakture(Status.ODBIJENA);
-            String subject = "Поштовани/а,\nХвала што купујете код нас.\nНажалост, тражену робу немамо на стању те се и поруџбине блокира - детаље можете проверити кроз Ваш налог на сајту.\n.";
-            notificationService.sendNotification(current, subject, izlaznaFaktura.getBrojFakture());
         }
 
         fakturaRepository.save(izlaznaFaktura);
         return fakturaEnd;
 
 
+    }
+
+
+    public void posaljiPoruku(PorukaDTO poruka){
+        IzlaznaFaktura izlaznaFaktura = fakturaRepository.findById(poruka.getFakturaId()).orElse(null);
+        notificationService.sendNotification(izlaznaFaktura.getKupac(), poruka.getPoruka(), izlaznaFaktura.getBrojFakture());
     }
 
 
