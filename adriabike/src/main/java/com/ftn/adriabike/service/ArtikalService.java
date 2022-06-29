@@ -3,6 +3,7 @@ package com.ftn.adriabike.service;
 import com.ftn.adriabike.model.*;
 import com.ftn.adriabike.repository.*;
 import com.ftn.adriabike.web.dto.ArtikalResponseDTO;
+import com.ftn.adriabike.web.dto.ArtikliListboxDTO;
 import com.ftn.adriabike.web.dto.DobavljanjeNoveRobeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,6 +82,15 @@ public class ArtikalService {
         return artikal;
     }
 
+    public List<ArtikliListboxDTO> getForListbox(){
+
+        List<ArtikliListboxDTO> artikli = new ArrayList<>();
+        for(Artikal artikal: artikalRepository.findAll()){
+            artikli.add(new ArtikliListboxDTO(artikal));
+        }
+        return artikli;
+    }
+
     public Double getCenaArtikla(Artikal a){
         Cenovnik latestCenovnik = cenovnikRepository.findLatest();
         StavkaCenovnika stavkaCenovnika = stavkaCenovnikaRepository.findStavkaCenovnikaByArtikalAndCenovnik(a, latestCenovnik);
@@ -100,24 +110,34 @@ public class ArtikalService {
 
 
         for(DobavljanjeNoveRobeDTO dobavljanjeNoveRobeDTO:dobavljanjeNoveRobeDTOList){
-            Artikal artikal = new Artikal();
-            artikal.setNaziv(dobavljanjeNoveRobeDTO.getNaziv());
-            artikal.setOpis(dobavljanjeNoveRobeDTO.getOpis());
-            artikal.setSlika(dobavljanjeNoveRobeDTO.getSlika());
-            artikal.setPakovanje(1);
 
-            artikal.setPoreskaKategorija(poreskaKategorijaRepository.findById(dobavljanjeNoveRobeDTO.getPoreskaId()).orElse(null));
+            if(dobavljanjeNoveRobeDTO.getArtikalId() == null){
+                Artikal artikal = new Artikal();
+                artikal.setNaziv(dobavljanjeNoveRobeDTO.getNaziv());
+                artikal.setOpis(dobavljanjeNoveRobeDTO.getOpis());
+                artikal.setSlika(dobavljanjeNoveRobeDTO.getSlika());
+                artikal.setPakovanje(1);
 
-            Cenovnik latestCenovnik = cenovnikRepository.findLatest();
-            StavkaCenovnika stavkaCenovnika = new StavkaCenovnika();
-            stavkaCenovnika.setArtikal(artikal);
-            stavkaCenovnika.setCena(dobavljanjeNoveRobeDTO.getCena());
-            stavkaCenovnika.setCenovnik(latestCenovnik);
+                artikal.setPoreskaKategorija(poreskaKategorijaRepository.findById(dobavljanjeNoveRobeDTO.getPoreskaId()).orElse(null));
 
-            artikalRepository.save(artikal);
-            stavkaCenovnikaRepository.save(stavkaCenovnika);
-            magacinskaKarticaService.createMagacinskaKartica(dobavljanjeNoveRobeDTO, artikal);
-            dobavljanjeNoveRobeDTO.setArtikalId(artikal.getId());
+                Cenovnik latestCenovnik = cenovnikRepository.findLatest();
+                StavkaCenovnika stavkaCenovnika = new StavkaCenovnika();
+                stavkaCenovnika.setArtikal(artikal);
+                stavkaCenovnika.setCena(dobavljanjeNoveRobeDTO.getCena());
+                stavkaCenovnika.setCenovnik(latestCenovnik);
+
+                artikalRepository.save(artikal);
+                stavkaCenovnikaRepository.save(stavkaCenovnika);
+                magacinskaKarticaService.createMagacinskaKartica(dobavljanjeNoveRobeDTO, artikal);
+                dobavljanjeNoveRobeDTO.setArtikalId(artikal.getId());
+
+            }else{
+                Artikal artikal = artikalRepository.findById(dobavljanjeNoveRobeDTO.getArtikalId()).orElse(null);
+                MagacinskaKartica magacinskaKartica = magacinskaKarticaRepository.findFirstByArtikal(artikal.getId());
+                magacinskaKartica.setPrometUlazaKolicina(magacinskaKartica.getPrometUlazaKolicina() + dobavljanjeNoveRobeDTO.getKolicina());
+                magacinskaKarticaRepository.save(magacinskaKartica);
+            }
+
 
         }
 

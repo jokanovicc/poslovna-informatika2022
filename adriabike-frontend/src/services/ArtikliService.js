@@ -8,7 +8,8 @@ export const ArtikliService = {
     getPrijemniceById,
     getCenovici,
     getById,
-    update
+    update,
+    getListBox
 }
 
 async function getAll(){
@@ -57,4 +58,8 @@ async function getCenovici(pageNumber){
 
 async function getPrijemniceById(id){
     return await AxiosClient.get(`http://localhost:8080/api/prijemnice/${id}`);
+}
+
+async function getListBox(){
+    return await AxiosClient.get("http://localhost:8080/api/articles/listbox");
 }

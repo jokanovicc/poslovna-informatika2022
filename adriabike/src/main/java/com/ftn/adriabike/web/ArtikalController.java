@@ -37,6 +37,11 @@ public class ArtikalController {
                 .body(artikalService.findAll());
     }
 
+    @GetMapping("/listbox")
+    public List<ArtikliListboxDTO> getForListbox(){
+        return artikalService.getForListbox();
+    }
+
     @PutMapping("/{id}/update")
     public void updateArtikal(@PathVariable("id") Integer artikalId, @RequestBody ArtikalResponseDTO artikalResponseDTO){
         artikalService.updateArtikal(artikalResponseDTO, artikalId);
