@@ -1,9 +1,6 @@
 package com.ftn.adriabike.service;
 
-import com.ftn.adriabike.model.Artikal;
-import com.ftn.adriabike.model.PoreskaStopa;
-import com.ftn.adriabike.model.Prijemnica;
-import com.ftn.adriabike.model.StavkaPrometnogDokumenta;
+import com.ftn.adriabike.model.*;
 import com.ftn.adriabike.repository.ArtikalRepository;
 import com.ftn.adriabike.repository.MagacinRepository;
 import com.ftn.adriabike.repository.PrijemnicaRepository;
@@ -45,13 +42,23 @@ public class PrijemnicaService {
         prijemnica.setBroj((int) Math.floor(Math.random()*(50000-20000+1)+1000));
         prijemnica.setDatumDokumenta(new Date(Calendar.getInstance().getTime().getTime()));
         prijemnica.setDatumKnjizenja(prijemnica.getDatumDokumenta());
-        prijemnica.setMagacin(magacinRepository.findById(1).orElse(null));
+        prijemnica.setMagacin(magacinRepository.findById(getMagacinFromDobavljanjeNoveRobe(dobavljanjeNoveRobeDTO)).orElse(null));
+
 
         prijemnicaRepository.save(prijemnica);
 
         createStavkaPrometnogDokumenta(dobavljanjeNoveRobeDTO, prijemnica);
 
 
+    }
+
+    public Integer getMagacinFromDobavljanjeNoveRobe(List<DobavljanjeNoveRobeDTO> dobavljanjeNoveRobeDTO){
+        Integer id = null;
+        for(DobavljanjeNoveRobeDTO dt: dobavljanjeNoveRobeDTO){
+            id = dt.getMagacinId();
+
+        }
+        return id;
     }
 
     private void createStavkaPrometnogDokumenta(List<DobavljanjeNoveRobeDTO> dobavljanjeNoveRobeDTOList, Prijemnica prijemnica) {

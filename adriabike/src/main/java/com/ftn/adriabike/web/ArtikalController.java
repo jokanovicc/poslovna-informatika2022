@@ -72,6 +72,11 @@ public class ArtikalController {
         return cenovnikService.getAllCenovnici(page);
     }
 
+    @PostMapping("/poskupljenje")
+    public void poskupi(@RequestBody RastCenovnikaDTO rastCenovnikaDTO){
+        cenovnikService.makePoskupljenje(rastCenovnikaDTO);
+    }
+
 
 
 

@@ -3,6 +3,7 @@ import { ArtikliService } from '../../services/ArtikliService';
 import { Button, Col, Container, Form, Table, Row, Modal } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import './../../radnik.css'
 
 
 
@@ -110,10 +111,15 @@ const DodavanjeRobe = () => {
 
     const sendRequest = async () => {
         console.log(listaNoveRoba);
-        await ArtikliService.dobaviRobu(listaNoveRoba);
-        Swal.fire('Uspešno unešenea roba!', 'Očivatanje svih prijemnica...', "success").then(
-            () => window.location.assign("/warehouse")
-        );
+        if(listaNoveRoba.length > 0){
+            await ArtikliService.dobaviRobu(listaNoveRoba);
+            Swal.fire('Uspešno unešenea roba!', 'Očivatanje svih prijemnica...', "success").then(
+                () => window.location.assign("/warehouse")
+            );
+        }else{
+            alert("Lista je prazna!")
+        }
+
     }
 
     function cleanField() {
@@ -137,12 +143,18 @@ const DodavanjeRobe = () => {
     }
 
     async function sendRequest2(){
-        dobavljanjeRobe.magacinId = id;
-        dobavljanjeRobe.artikalId = idArtikla;
-        dobavljanjeRobe.naziv = text;
-        const newList = listaNoveRoba.concat(dobavljanjeRobe);
-        setListNoveRobe(newList);
-        cleanField();
+
+        if(idArtikla != null){
+            dobavljanjeRobe.magacinId = id;
+            dobavljanjeRobe.artikalId = idArtikla;
+            dobavljanjeRobe.naziv = text;
+            const newList = listaNoveRoba.concat(dobavljanjeRobe);
+            setListNoveRobe(newList);
+            cleanField();
+        }else{
+            alert("Prazno!")
+        }
+
 
 
     }
@@ -168,7 +180,7 @@ const DodavanjeRobe = () => {
                                 onChange={e => onChangeHandler(e.target.value)}
                                 value={text} />
                             {sugestije && sugestije.map((s, i) =>
-                                <div onClick={() => onSuggestHandler(s)} style={{ cursor: "pointer", borderLeft: "1px solid black", borderRight: "1px solid black", borderBottom: "1px solid black" }} key={i}>{s.naziv}</div>)}
+                                <div className='autocomplete' onClick={() => onSuggestHandler(s)} style={{ cursor: "pointer", borderLeft: "1px solid grey", borderRight: "1px solid black", borderBottom: "1px solid black" }} key={i}>{s.naziv}</div>)}
                         </Form.Group>
                         <Button style={{marginBottom:"20px", marginTop:"10px"}} variant="success" onClick={() => handleShow()}>
         Нова роба

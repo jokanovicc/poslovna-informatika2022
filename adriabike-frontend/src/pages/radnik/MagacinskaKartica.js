@@ -59,7 +59,6 @@ const MagacinskaKartica = () => {
                     </tr>
                 </tbody>
             </Table>
-            <Button style={{width:"100%"}}>Креирај пријемницу</Button>
 
             <AnalitikaKartice kartica={kartica.id}/>
 

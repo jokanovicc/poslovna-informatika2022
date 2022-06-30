@@ -9,7 +9,8 @@ export const ArtikliService = {
     getCenovici,
     getById,
     update,
-    getListBox
+    getListBox,
+    poskupi
 }
 
 async function getAll(){
@@ -42,6 +43,10 @@ async function getPrijemnice(pageNumber){
     return await AxiosClient.get("http://localhost:8080/api/prijemnice", options);
 
 
+}
+
+async function poskupi(body){
+    return await AxiosClient.post("http://localhost:8080/api/articles/poskupljenje", body);
 }
 
 async function getCenovici(pageNumber){

@@ -58,6 +58,8 @@ public class MagacinskaKarticaService {
 
     public void createPocetnoStanje(){
 
+
+
         for(MagacinskaKartica magacinskaKartica: magacinskaKarticaRepository.findProslogodinjeKartice()){
 
 
@@ -74,6 +76,7 @@ public class MagacinskaKarticaService {
             novaMagacinskaKartica.setPrometUlazaKolicina(novaMagacinskaKartica.getPocetnoStanjeKolicina());
             novaMagacinskaKartica.setArtikal(magacinskaKartica.getArtikal());
             novaMagacinskaKartica.setPoslovnaGodina(poslovnaGodinaRepository.findLatest());
+
 
             magacinskaKarticaRepository.save(novaMagacinskaKartica);
 

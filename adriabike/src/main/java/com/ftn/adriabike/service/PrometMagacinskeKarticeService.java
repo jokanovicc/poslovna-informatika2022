@@ -1,9 +1,7 @@
 package com.ftn.adriabike.service;
 
-import com.ftn.adriabike.model.MagacinskaKartica;
-import com.ftn.adriabike.model.PrometMagacinskeKartice;
-import com.ftn.adriabike.model.Smer;
-import com.ftn.adriabike.model.StavkaFakture;
+import com.ftn.adriabike.model.*;
+import com.ftn.adriabike.repository.ArtikalRepository;
 import com.ftn.adriabike.repository.PrometMagacinskeKarticeRepository;
 import com.ftn.adriabike.web.dto.AnalyticDTO;
 import com.ftn.adriabike.web.dto.DobavljanjeNoveRobeDTO;
@@ -26,6 +24,9 @@ public class PrometMagacinskeKarticeService {
     @Autowired
     private ArtikalService artikalService;
 
+    @Autowired
+    private ArtikalRepository artikalRepository;
+
 
 
     public void createUlaznogPrometaMagacinskeKartice(DobavljanjeNoveRobeDTO dobavljanjeNoveRobeDTO, MagacinskaKartica magacinskaKartica){
@@ -33,10 +34,17 @@ public class PrometMagacinskeKarticeService {
         PrometMagacinskeKartice prometMagacinskeKartice = new PrometMagacinskeKartice();
         prometMagacinskeKartice.setDatum(new Date(Calendar.getInstance().getTime().getTime()));
         prometMagacinskeKartice.setKolicina(dobavljanjeNoveRobeDTO.getKolicina());
-        prometMagacinskeKartice.setCena(dobavljanjeNoveRobeDTO.getCena());
-        prometMagacinskeKartice.setVrednost(dobavljanjeNoveRobeDTO.getKolicina() * dobavljanjeNoveRobeDTO.getCena());
-        prometMagacinskeKartice.setSmer(Smer.ULAZ);
 
+        if(dobavljanjeNoveRobeDTO.getArtikalId() == null){
+            prometMagacinskeKartice.setCena(dobavljanjeNoveRobeDTO.getCena());
+            prometMagacinskeKartice.setVrednost(dobavljanjeNoveRobeDTO.getKolicina() * dobavljanjeNoveRobeDTO.getCena());
+        }else{
+            prometMagacinskeKartice.setCena(artikalService.getCenaArtiklaOsnovica(artikalRepository.findById(dobavljanjeNoveRobeDTO.getArtikalId()).orElse(null)));
+            prometMagacinskeKartice.setVrednost(dobavljanjeNoveRobeDTO.getKolicina() * prometMagacinskeKartice.getCena());
+        }
+
+
+        prometMagacinskeKartice.setSmer(Smer.ULAZ);
         prometMagacinskeKartice.setMagacinskaKartica(magacinskaKartica);
 
         prometMagacinskeKarticeRepository.save(prometMagacinskeKartice);

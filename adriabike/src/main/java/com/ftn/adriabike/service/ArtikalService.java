@@ -85,7 +85,7 @@ public class ArtikalService {
     public List<ArtikliListboxDTO> getForListbox(){
 
         List<ArtikliListboxDTO> artikli = new ArrayList<>();
-        for(Artikal artikal: artikalRepository.findAll()){
+        for(Artikal artikal: artikalRepository.getAll()){
             artikli.add(new ArtikliListboxDTO(artikal));
         }
         return artikli;
@@ -135,6 +135,7 @@ public class ArtikalService {
                 Artikal artikal = artikalRepository.findById(dobavljanjeNoveRobeDTO.getArtikalId()).orElse(null);
                 MagacinskaKartica magacinskaKartica = magacinskaKarticaRepository.findFirstByArtikal(artikal.getId());
                 magacinskaKartica.setPrometUlazaKolicina(magacinskaKartica.getPrometUlazaKolicina() + dobavljanjeNoveRobeDTO.getKolicina());
+                magacinskaKartica.setPrometUlazaVrednost(magacinskaKartica.getPrometUlazaVrednost() + (dobavljanjeNoveRobeDTO.getKolicina() * getCenaArtiklaOsnovica(artikal)));
                 magacinskaKarticaRepository.save(magacinskaKartica);
             }
 

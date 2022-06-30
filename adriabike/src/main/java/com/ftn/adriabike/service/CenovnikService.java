@@ -1,14 +1,11 @@
 package com.ftn.adriabike.service;
 
-import com.ftn.adriabike.model.Artikal;
 import com.ftn.adriabike.model.Cenovnik;
 import com.ftn.adriabike.model.StavkaCenovnika;
 import com.ftn.adriabike.repository.CenovnikRepository;
+import com.ftn.adriabike.repository.PreduzeceRepository;
 import com.ftn.adriabike.repository.StavkaCenovnikaRepository;
-import com.ftn.adriabike.web.dto.CenovniciPagingResult;
-import com.ftn.adriabike.web.dto.CenovnikDTO;
-import com.ftn.adriabike.web.dto.DobavljanjeNoveRobeDTO;
-import com.ftn.adriabike.web.dto.StavkeCenovnikaDTO;
+import com.ftn.adriabike.web.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +24,9 @@ public class CenovnikService {
 
     @Autowired
     private CenovnikRepository cenovnikRepository;
+
+    @Autowired
+    private PreduzeceRepository preduzeceRepository;
 
 
     public CenovniciPagingResult getAllCenovnici(Integer pageNo){
@@ -48,6 +48,32 @@ public class CenovnikService {
         cenovniciPagingResult.setPagesCount(cenovnici.getTotalPages());
 
         return cenovniciPagingResult;
+
+    }
+
+    public void makePoskupljenje(RastCenovnikaDTO rastCenovnikaDTO){
+        Cenovnik cenovnik = cenovnikRepository.findLatest();
+        List<StavkaCenovnika> stavka = stavkaCenovnikaRepository.findAllByCenovnik(cenovnik);
+
+        Cenovnik noviCenovnik = new Cenovnik();
+        noviCenovnik.setPreduzece(cenovnik.getPreduzece());
+        noviCenovnik.setStart(rastCenovnikaDTO.getDatum());
+        cenovnikRepository.save(noviCenovnik);
+
+        for(StavkaCenovnika s : stavka){
+            StavkaCenovnika novaStavka = new StavkaCenovnika();
+            novaStavka.setCenovnik(noviCenovnik);
+            novaStavka.setArtikal(s.getArtikal());
+
+            if(rastCenovnikaDTO.isPoskupljenje()){
+                novaStavka.setCena(s.getCena() + ((s.getCena() * rastCenovnikaDTO.getProcenat()) / 100));
+            }else{
+                novaStavka.setCena(s.getCena() - ((s.getCena() * rastCenovnikaDTO.getProcenat()) / 100));
+            }
+            stavkaCenovnikaRepository.save(novaStavka);
+
+        }
+
 
     }
 

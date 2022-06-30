@@ -37,9 +37,9 @@ const AnalitikaKartice = (props) => {
     return (
         <>
                 <Row>
+                    <hr/>
                     <Col md={{ span: 6, offset: 3 }} style={{ textAlign: "center" }}>
-                        <h2>Промет картице </h2>
-                        <hr />
+                        <h3>Промет картице </h3>
                         <Form>
                             <Form.Group>
                                 <Form.Label>Стартни датум</Form.Label>
