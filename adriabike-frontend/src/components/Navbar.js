@@ -18,10 +18,10 @@ const NavBar = () => {
       <Nav className="mr-auto">
         {role == "ROLE_KUPAC" &&
           <>
-            <Nav.Link as={Link} to="/cart">
+            <Nav.Link onClick={() => window.location.assign("/cart")}>
               Корпа
             </Nav.Link>
-            <Nav.Link as={Link} to="/user-faktura">
+            <Nav.Link onClick={() => window.location.assign("/user-faktura")}>
               Наруџбенице
             </Nav.Link>
           </>
@@ -34,8 +34,7 @@ const NavBar = () => {
         {TokenService.getToken() ? (
           <>
                 <NavDropdown title="Профил" id="navbarScrollingDropdown">
-                <NavDropdown.Item as={Link} to="/profile">Приказ профила</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">Ажурирање профила</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => window.location.assign("/profile")}>Приказ профила</NavDropdown.Item>
               </NavDropdown>
         <Button style={{marginLeft:"2vw"}} onClick={() => AuthenticationService.logout()}>Log out</Button>
         </>

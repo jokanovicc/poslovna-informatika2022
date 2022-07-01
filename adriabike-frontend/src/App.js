@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
@@ -24,40 +24,44 @@ import MagaciniAdmin from "./pages/admin/MagaciniAdmin";
 import PoreskeKategorije from "./pages/admin/PoreskeKategorije";
 import AnalitikaKartice from "./pages/radnik/AnalitikaKartice";
 import KorigovanjeCenovnika from "./pages/radnik/KorigovanjeCenovnika";
+import { PrivateRoute } from "./components/PrivateRoute";
 
 function App() {
   return (
     <Router>
       <Navbar />
       <Container style={{ marginTop: 35 }}>
-        <Routes>
-          <Route path="/" element={<Login/>} />
-          <Route path="/home-radnik" element={<HomeRadnik/>} />
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/login" />
+          </Route>
+          <Route path="/login" component={Login} />
+          <PrivateRoute exact path="/home-radnik" component={HomeRadnik} roles={["ROLE_PRODAVAC"]} />
 
-          <Route path="/home-customer" element={<HomeCustomer/>} />
-          <Route path="/warehouse" element={<Magacini/>} />
-          <Route path="/card/:id" element={<MagacinskaKartica/>} />
-          <Route path="/dobavljanje-robe/:id" element={<DodavanjeRobe/>} />
-          <Route path="/prijemnice" element={<SvePrijemnice/>} />
+          <PrivateRoute path="/home-customer" component={HomeCustomer} roles={["ROLE_KUPAC"]}/>
+          <PrivateRoute path="/warehouse" component={Magacini} roles={["ROLE_PRODAVAC"]}/>
+          <PrivateRoute path="/card/:id" component={MagacinskaKartica} roles={["ROLE_PRODAVAC"]}/>
+          <PrivateRoute path="/dobavljanje-robe/:id" component={DodavanjeRobe} roles={["ROLE_PRODAVAC"]} />
+          <PrivateRoute path="/prijemnice" component={SvePrijemnice} roles={["ROLE_PRODAVAC"]}/>
 
-          <Route path="/prijemnica/:id" element={<Prijemnica/>} />
+          <PrivateRoute path="/prijemnica/:id" component={Prijemnica} roles={["ROLE_PRODAVAC"]}/>
 
-          <Route path="/analytic" element={<AnalitikaMagacinskeKartice/>} />
-          <Route path="/cenovnici" element={<Cenovnici/>} />
-          <Route path="/cart" element={<Korpa/>}/>
-          <Route path="/fakture" element={<IzlazneFakture/>}/>
-          <Route path="/fakture/:id" element={<Faktura/>}/>
-          <Route path="/user-faktura" element={<FaktureKupca/>}/>
+          <PrivateRoute path="/analytic" component={AnalitikaMagacinskeKartice} roles={["ROLE_PRODAVAC"]}/>
+          <PrivateRoute path="/cenovnici" component={Cenovnici} roles={["ROLE_PRODAVAC"]}/>
+          <PrivateRoute path="/cart" component={Korpa} roles={["ROLE_KUPAC"]}/>
+          <PrivateRoute path="/fakture" component={IzlazneFakture} roles={["ROLE_PRODAVAC", "ROLE_KUPAC"]}/>
+          <PrivateRoute path="/fakture/:id" component={Faktura} roles={["ROLE_PRODAVAC", "ROLE_KUPAC"]}/>
+          <PrivateRoute path="/user-faktura" component={FaktureKupca} roles={["ROLE_PRODAVAC", "ROLE_KUPAC"]}/>
 
-          <Route path="/register" element={<Registracija/>}/>
-          <Route path="/profile" element={<Profile/>}/>
-          <Route path="/update-artikal/:id" element={<UpdateArtikal/>}/>
-          <Route path="/admin-magacini" element={<MagaciniAdmin/>}/>
-          <Route path="/poreske-kategorije" element={<PoreskeKategorije/>}/>
-          <Route path="/korigovanje-cenovnika/:id" element={<KorigovanjeCenovnika/>}/>
-        </Routes>
+          <Route path="/register" component={Registracija}/>
+          <PrivateRoute path="/profile" component={Profile} roles={["ROLE_PRODAVAC", "ROLE_KUPAC", "ROLE_ADMIN"]}/>
+          <PrivateRoute path="/update-artikal/:id" component={UpdateArtikal} roles={["ROLE_PRODAVAC"]}/>
+          <PrivateRoute path="/admin-magacini" component={MagaciniAdmin} roles={["ROLE_ADMIN"]}/>
+          <PrivateRoute path="/poreske-kategorije" component={PoreskeKategorije} roles={["ROLE_ADMIN"]}/>
+          <PrivateRoute path="/korigovanje-cenovnika/:id" component={KorigovanjeCenovnika} roles={["ROLE_PRODAVAC"]}/>
+        </Switch>
       </Container>
-      <Footer/>
+      <Footer />
     </Router>
   );
 }

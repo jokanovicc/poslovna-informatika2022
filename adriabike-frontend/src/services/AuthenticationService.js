@@ -1,11 +1,13 @@
 import AxiosClient from "./clients/AxiosClient";
 import { TokenService } from "./TokenService";
+import { Redirect, Route } from "react-router-dom";
 
 export const AuthenticationService = {
   login,
   logout,
   getRole,
-  register
+  register,
+  redirect
 };
 
 async function login(userCredentials) {
@@ -17,7 +19,6 @@ async function login(userCredentials) {
     const decoded_token = TokenService.decodeToken(response.data);
     if (decoded_token) {
       TokenService.setToken(response.data);
-      alert(response.data);
       if (getRole() == "ROLE_KUPAC") {
         window.location.assign("/home-customer")
       } else {
@@ -41,6 +42,13 @@ async function register(body) {
 function logout() {
   TokenService.removeToken();
   window.location.assign("/");
+}
+
+function redirect(role){
+  if(role == "ROLE_PRODAVAC"){
+    <Redirect to={{ pathname: "/home-radnik" }}/>
+  }
+  
 }
 
 function getRole() {

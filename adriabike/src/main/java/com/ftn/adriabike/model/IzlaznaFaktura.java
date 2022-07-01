@@ -37,4 +37,7 @@ public class IzlaznaFaktura {
 
     @Enumerated(EnumType.STRING)
     private Status statusFakture;
+
+    @Version
+    private Integer version;
 }

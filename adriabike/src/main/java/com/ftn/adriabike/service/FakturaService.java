@@ -9,7 +9,9 @@ import com.ftn.adriabike.web.dto.StavkaIzlazneFaktureDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -192,7 +194,7 @@ public class FakturaService{
         return fakturaEnd;
     }
 
-
+    @Transactional
     public FakturaEndResponse zavrsiFakturu(Integer fakturaId, Authentication authentication){
         Korisnik current = userService.getUser(authentication);
         IzlaznaFaktura izlaznaFaktura = fakturaRepository.findById(fakturaId).orElse(null);
