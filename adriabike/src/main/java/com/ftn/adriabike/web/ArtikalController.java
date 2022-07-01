@@ -73,9 +73,22 @@ public class ArtikalController {
     }
 
     @PostMapping("/poskupljenje")
-    public void poskupi(@RequestBody RastCenovnikaDTO rastCenovnikaDTO){
-        cenovnikService.makePoskupljenje(rastCenovnikaDTO);
+    public ResponseEntity<CenovnikDTO> poskupi(@RequestBody RastCenovnikaDTO rastCenovnikaDTO){
+        return ResponseEntity
+                .ok()
+                .body(cenovnikService.makePoskupljenje(rastCenovnikaDTO));
     }
+
+    @PostMapping("/korigovanje-cene")
+    public void korigovanjeCene(@RequestBody KorigovanjeCeneDTO korigovanjeCene){
+        cenovnikService.korigujCenu(korigovanjeCene);
+    }
+
+    @GetMapping("/{id}/cenovnik")
+    public ResponseEntity<CenovnikDTO> getByIdCenovnik(@PathVariable Integer id){
+        return ResponseEntity
+                .ok()
+                .body(cenovnikService.getById(id));    }
 
 
 

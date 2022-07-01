@@ -47,7 +47,7 @@ const Faktura = () => {
     
       async function sendPoruka(){
         poruka.fakturaId = id;
-        return await FakturaService.sendPoruka(poruka);
+        await FakturaService.sendPoruka(poruka);
         handleClose();
       }
 

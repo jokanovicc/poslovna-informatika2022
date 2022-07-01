@@ -105,6 +105,12 @@ public class ArtikalService {
         return stavkaCenovnika.getCena();
     }
 
+    public Double getCenaPocetnoStanje(Artikal a){
+        Cenovnik cenovnik = cenovnikRepository.findLatestByPocetnoStanje();
+        StavkaCenovnika stavkaCenovnika = stavkaCenovnikaRepository.findStavkaCenovnikaByArtikalAndCenovnik(a, cenovnik);
+        return stavkaCenovnika.getCena();
+    }
+
 
     public void dobavljenjeNoveRobe(List<DobavljanjeNoveRobeDTO> dobavljanjeNoveRobeDTOList){
 

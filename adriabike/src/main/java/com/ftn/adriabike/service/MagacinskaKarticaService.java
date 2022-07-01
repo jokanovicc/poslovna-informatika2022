@@ -28,6 +28,9 @@ public class MagacinskaKarticaService {
     @Autowired
     private ArtikalService artikalService;
 
+    @Autowired
+    private CenovnikService cenovnikService;
+
 
 
 
@@ -65,8 +68,8 @@ public class MagacinskaKarticaService {
 
             MagacinskaKartica novaMagacinskaKartica = new MagacinskaKartica();
             novaMagacinskaKartica.setPocetnoStanjeKolicina(magacinskaKartica.getPrometUlazaKolicina() - magacinskaKartica.getPrometIzlazaKolicina());
-            novaMagacinskaKartica.setPocetnoStanjeVrednost((magacinskaKartica.getPrometUlazaKolicina() - magacinskaKartica.getPrometIzlazaKolicina()) * artikalService.getCenaArtiklaOsnovica(magacinskaKartica.getArtikal()));
-            novaMagacinskaKartica.setProsecnaCena(magacinskaKartica.getPocetnoStanjeVrednost());
+            novaMagacinskaKartica.setPocetnoStanjeVrednost((magacinskaKartica.getPrometUlazaKolicina() - magacinskaKartica.getPrometIzlazaKolicina()) * artikalService.getCenaPocetnoStanje(magacinskaKartica.getArtikal()));
+            novaMagacinskaKartica.setProsecnaCena(getProsecnaCena(artikalService.getCenaPocetnoStanje(magacinskaKartica.getArtikal()), novaMagacinskaKartica));
 
             novaMagacinskaKartica.setMagacin(magacinskaKartica.getMagacin());
             novaMagacinskaKartica.setUkupnaVrednost(novaMagacinskaKartica.getPocetnoStanjeVrednost());
@@ -77,6 +80,7 @@ public class MagacinskaKarticaService {
             novaMagacinskaKartica.setArtikal(magacinskaKartica.getArtikal());
             novaMagacinskaKartica.setPoslovnaGodina(poslovnaGodinaRepository.findLatest());
 
+            cenovnikService.dodajPocetnoStanjeUCenovnik(artikalService.getCenaPocetnoStanje(magacinskaKartica.getArtikal()), novaMagacinskaKartica.getArtikal());
 
             magacinskaKarticaRepository.save(novaMagacinskaKartica);
 

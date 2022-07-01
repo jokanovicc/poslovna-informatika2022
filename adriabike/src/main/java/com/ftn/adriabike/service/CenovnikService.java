@@ -1,5 +1,6 @@
 package com.ftn.adriabike.service;
 
+import com.ftn.adriabike.model.Artikal;
 import com.ftn.adriabike.model.Cenovnik;
 import com.ftn.adriabike.model.StavkaCenovnika;
 import com.ftn.adriabike.repository.CenovnikRepository;
@@ -51,7 +52,21 @@ public class CenovnikService {
 
     }
 
-    public void makePoskupljenje(RastCenovnikaDTO rastCenovnikaDTO){
+    public CenovnikDTO getById(Integer cenovnikId){
+        Cenovnik cenovnik = cenovnikRepository.findById(cenovnikId).orElse(null);
+        CenovnikDTO cenovnikDTO = new CenovnikDTO(cenovnik);
+        List<StavkaCenovnika> stavke = stavkaCenovnikaRepository.findAllByCenovnik(cenovnik);
+
+        for(StavkaCenovnika stavka: stavke){
+            cenovnikDTO.getStavkeCenovnikaDTO().add(new StavkeCenovnikaDTO(stavka));
+        }
+
+        return cenovnikDTO;
+
+
+    }
+
+    public CenovnikDTO makePoskupljenje(RastCenovnikaDTO rastCenovnikaDTO){
         Cenovnik cenovnik = cenovnikRepository.findLatest();
         List<StavkaCenovnika> stavka = stavkaCenovnikaRepository.findAllByCenovnik(cenovnik);
 
@@ -74,6 +89,28 @@ public class CenovnikService {
 
         }
 
+        return new CenovnikDTO(noviCenovnik);
+
+
+    }
+
+
+    public void korigujCenu(KorigovanjeCeneDTO korigovanjeCene){
+        StavkaCenovnika stavkaCenovnika = stavkaCenovnikaRepository.findById(korigovanjeCene.getStavkaId()).orElse(null);
+        stavkaCenovnika.setCena(korigovanjeCene.getNovaCena());
+
+        stavkaCenovnikaRepository.save(stavkaCenovnika);
+    }
+
+
+    public void dodajPocetnoStanjeUCenovnik(Double cena, Artikal artikal){
+        Cenovnik cenovnik = cenovnikRepository.findLatest();
+        StavkaCenovnika stavkaCenovnika = new StavkaCenovnika();
+        stavkaCenovnika.setCenovnik(cenovnik);
+        stavkaCenovnika.setCena(cena);
+        stavkaCenovnika.setArtikal(artikal);
+
+        stavkaCenovnikaRepository.save(stavkaCenovnika);
 
     }
 

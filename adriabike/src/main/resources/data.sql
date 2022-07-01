@@ -41,4 +41,4 @@ INSERT INTO stavka_cenovnika(cena, artikal_id, cenovnik_id) VALUES (18000, 1, 2)
 INSERT INTO stavka_cenovnika(cena, artikal_id, cenovnik_id) VALUES (9000, 2, 2);
 INSERT INTO stavka_cenovnika(cena, artikal_id, cenovnik_id) VALUES (50000, 3, 2);
 INSERT INTO stavka_cenovnika(cena, artikal_id, cenovnik_id) VALUES (80000, 4, 2);
-INSERT INTO stavka_cenovnika(cena, artikal_id, cenovnik_id) VALUES (18000, 5, 2);
+INSERT INTO stavka_cenovnika(cena, artikal_id, cenovnik_id) VALUES (18000, 5, 1);

@@ -12,6 +12,7 @@ const MagacinskaKartica = () => {
     const { id } = useParams();
 
 
+
     useEffect(() => {
         fetchMagacinskaKartica();
     }, [id])

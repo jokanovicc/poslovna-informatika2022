@@ -10,7 +10,9 @@ export const ArtikliService = {
     getById,
     update,
     getListBox,
-    poskupi
+    poskupi,
+    fetchCenovnik,
+    korigujCenu
 }
 
 async function getAll(){
@@ -49,6 +51,10 @@ async function poskupi(body){
     return await AxiosClient.post("http://localhost:8080/api/articles/poskupljenje", body);
 }
 
+async function korigujCenu(body){
+    return await AxiosClient.post("http://localhost:8080/api/articles/korigovanje-cene", body);
+}
+
 async function getCenovici(pageNumber){
     const options = {
         params: {
@@ -67,4 +73,8 @@ async function getPrijemniceById(id){
 
 async function getListBox(){
     return await AxiosClient.get("http://localhost:8080/api/articles/listbox");
+}
+
+async function fetchCenovnik(id){
+    return await AxiosClient.get(`http://localhost:8080/api/articles/${id}/cenovnik`);
 }

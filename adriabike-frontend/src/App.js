@@ -23,6 +23,7 @@ import UpdateArtikal from "./pages/radnik/UpdateArtikal";
 import MagaciniAdmin from "./pages/admin/MagaciniAdmin";
 import PoreskeKategorije from "./pages/admin/PoreskeKategorije";
 import AnalitikaKartice from "./pages/radnik/AnalitikaKartice";
+import KorigovanjeCenovnika from "./pages/radnik/KorigovanjeCenovnika";
 
 function App() {
   return (
@@ -53,7 +54,7 @@ function App() {
           <Route path="/update-artikal/:id" element={<UpdateArtikal/>}/>
           <Route path="/admin-magacini" element={<MagaciniAdmin/>}/>
           <Route path="/poreske-kategorije" element={<PoreskeKategorije/>}/>
-
+          <Route path="/korigovanje-cenovnika/:id" element={<KorigovanjeCenovnika/>}/>
         </Routes>
       </Container>
       <Footer/>

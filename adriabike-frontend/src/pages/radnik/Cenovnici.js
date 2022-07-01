@@ -62,7 +62,14 @@ const Cenovnici = () => {
     }
     
     async function sendRequest(){
-        await ArtikliService.poskupi(noviCenovnik).then(window.location.reload());
+
+        try {
+            const response =  await ArtikliService.poskupi(noviCenovnik)
+            window.location.assign(`/korigovanje-cenovnika/${response.data.id}`)
+        } catch (e) {
+            console.error("Error while getting api")
+        }
+
     }
 
 
