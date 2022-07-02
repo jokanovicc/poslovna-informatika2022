@@ -19,6 +19,7 @@ const Cenovnici = () => {
 
 
 
+
     useEffect(() => {
         fetchCenovnici();
     }, [])
@@ -35,7 +36,7 @@ const Cenovnici = () => {
     };
 
 
-    async function fetchCenovnici() {
+    async function fetchCenovnici(page) {
         try {
             const response = await ArtikliService.getCenovici(page);
             console.log(response.data);
@@ -49,17 +50,18 @@ const Cenovnici = () => {
 
 
 
-
     function nextPage() {
-        setPage(page + 1)
-        fetchCenovnici();
+        fetchCenovnici(page+1);
+        setPage(page+1)
     }
 
 
     function previousPage() {
+        fetchCenovnici(page - 1);
         setPage(page - 1)
-        fetchCenovnici();
+
     }
+
     
     async function sendRequest(){
 
@@ -121,7 +123,7 @@ const Cenovnici = () => {
 
             }
             <div>
-                <span style={{ marginRight: "20px" }} className='margin-md'>Страница {page + 1} од {totalPagesCount}</span>
+                <span style={{marginRight:"20px"}} className='margin-md'>Страница {page + 1} од {totalPagesCount}</span>
                 <button className='margin-sm' onClick={previousPage} disabled={page <= 0}>
                     Претходна
                 </button>
@@ -134,6 +136,7 @@ const Cenovnici = () => {
                 </button>
 
 
+             
             </div>
 
 
@@ -171,12 +174,11 @@ const Cenovnici = () => {
 
                         <Form.Group>
                             <Form.Label>Поскупљење</Form.Label>
-                            <Form.Check
-                                type="switch"
-                                name="poskupljenje"
-                                value={noviCenovnik.poskupljenje}
-                                onChange={handleFormInputChange("poskupljenje")}
-                            />
+                            <Form.Select value={noviCenovnik.poskupljenje} onChange={handleFormInputChange("poskupljenje")}>
+                                <option value="">Начин</option>
+                                <option value="true">Поскупљење</option>
+                                <option value="false">Појефтињење</option>
+                            </Form.Select>
                         </Form.Group>
 
                     </Form>

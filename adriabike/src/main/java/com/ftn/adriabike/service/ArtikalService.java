@@ -4,8 +4,12 @@ import com.ftn.adriabike.model.*;
 import com.ftn.adriabike.repository.*;
 import com.ftn.adriabike.web.dto.ArtikalResponseDTO;
 import com.ftn.adriabike.web.dto.ArtikliListboxDTO;
+import com.ftn.adriabike.web.dto.ArtikliPagingResult;
 import com.ftn.adriabike.web.dto.DobavljanjeNoveRobeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,12 +41,15 @@ public class ArtikalService {
     @Autowired
     private PoreskaStopaRepository poreskaStopaRepository;
 
-    public List<ArtikalResponseDTO> findAll() {
-        List<Artikal> artikli = artikalRepository.getAll();
+    public ArtikliPagingResult findAll(Integer pageNo) {
+
+        Pageable paging = PageRequest.of(pageNo,3);
+
+        Page<Artikal> artikli = artikalRepository.getAll(paging);
         List<ArtikalResponseDTO> artikliResponse = new ArrayList<ArtikalResponseDTO>();
         Cenovnik latestCenovnik = cenovnikRepository.findLatest();
 
-        for (Artikal a : artikli) {
+        for (Artikal a : artikli.getContent()) {
             MagacinskaKartica magacinskaKartica = magacinskaKarticaRepository.findFirstByArtikal(a.getId());
             if (magacinskaKartica.getPrometUlazaKolicina() > magacinskaKartica.getPrometIzlazaKolicina()) {
 
@@ -57,7 +64,11 @@ public class ArtikalService {
             }
         }
 
-        return artikliResponse;
+        ArtikliPagingResult artikliPaging = new ArtikliPagingResult();
+        artikliPaging.setArtikli(artikliResponse);
+        artikliPaging.setPagesCount(artikli.getTotalPages());
+
+        return artikliPaging;
 
 
     }

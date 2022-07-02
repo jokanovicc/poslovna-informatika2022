@@ -50,7 +50,7 @@ function App() {
           <PrivateRoute path="/cenovnici" component={Cenovnici} roles={["ROLE_PRODAVAC"]}/>
           <PrivateRoute path="/cart" component={Korpa} roles={["ROLE_KUPAC"]}/>
           <PrivateRoute path="/fakture" component={IzlazneFakture} roles={["ROLE_PRODAVAC", "ROLE_KUPAC"]}/>
-          <PrivateRoute path="/fakture/:id" component={Faktura} roles={["ROLE_PRODAVAC", "ROLE_KUPAC"]}/>
+          <Route path="/faktura/:id" component={Faktura}/>
           <PrivateRoute path="/user-faktura" component={FaktureKupca} roles={["ROLE_PRODAVAC", "ROLE_KUPAC"]}/>
 
           <Route path="/register" component={Registracija}/>

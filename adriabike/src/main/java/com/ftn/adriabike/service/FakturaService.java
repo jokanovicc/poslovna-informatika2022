@@ -9,7 +9,6 @@ import com.ftn.adriabike.web.dto.StavkaIzlazneFaktureDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 
 import javax.transaction.Transactional;
 import java.sql.Date;
@@ -112,20 +111,50 @@ public class FakturaService{
 
     }
 
-    public List<IzlaznaFakturaDTO> getIzlazneFaktureNaCekanju(){
+    public List<IzlaznaFakturaDTO> getIzlazneFakture(String queryParam){
         List<IzlaznaFakturaDTO> izlaznaFakturaDTO = new ArrayList();
 
-        for(IzlaznaFaktura izlaznaFaktura : fakturaRepository.findByStatusFakture(String.valueOf(Status.NEPOTVRDJENA))){
-            izlaznaFakturaDTO.add(new IzlaznaFakturaDTO(izlaznaFaktura));
 
-            for(StavkaFakture stavkaFakture: stavkaFaktureRepository.findAllByIzlaznaFaktura(izlaznaFaktura)){
-                for(IzlaznaFakturaDTO i:  izlaznaFakturaDTO){
-                    i.getStavkaFakture().add(new StavkaIzlazneFaktureDTO(stavkaFakture));
+        if(queryParam.equals("nepotvrdjena")){
+            for(IzlaznaFaktura izlaznaFaktura : fakturaRepository.findByStatusFakture(String.valueOf(Status.NEPOTVRDJENA))){
+                izlaznaFakturaDTO.add(new IzlaznaFakturaDTO(izlaznaFaktura));
+
+                for(StavkaFakture stavkaFakture: stavkaFaktureRepository.findAllByIzlaznaFaktura(izlaznaFaktura)){
+                    for(IzlaznaFakturaDTO i:  izlaznaFakturaDTO){
+                        i.getStavkaFakture().add(new StavkaIzlazneFaktureDTO(stavkaFakture));
+                    }
                 }
+
             }
-
-
         }
+
+        if(queryParam.equals("odbijena")){
+            for(IzlaznaFaktura izlaznaFaktura : fakturaRepository.findByStatusFakture(String.valueOf(Status.ODBIJENA))){
+                izlaznaFakturaDTO.add(new IzlaznaFakturaDTO(izlaznaFaktura));
+
+                for(StavkaFakture stavkaFakture: stavkaFaktureRepository.findAllByIzlaznaFaktura(izlaznaFaktura)){
+                    for(IzlaznaFakturaDTO i:  izlaznaFakturaDTO){
+                        i.getStavkaFakture().add(new StavkaIzlazneFaktureDTO(stavkaFakture));
+                    }
+                }
+
+            }
+        }
+
+        if(queryParam.equals("potvrdjena")){
+            for(IzlaznaFaktura izlaznaFaktura : fakturaRepository.findByStatusFakture(String.valueOf(Status.POTVRDJENA))){
+                izlaznaFakturaDTO.add(new IzlaznaFakturaDTO(izlaznaFaktura));
+
+                for(StavkaFakture stavkaFakture: stavkaFaktureRepository.findAllByIzlaznaFaktura(izlaznaFaktura)){
+                    for(IzlaznaFakturaDTO i:  izlaznaFakturaDTO){
+                        i.getStavkaFakture().add(new StavkaIzlazneFaktureDTO(stavkaFakture));
+                    }
+                }
+
+            }
+        }
+
+
 
         return izlaznaFakturaDTO;
     }

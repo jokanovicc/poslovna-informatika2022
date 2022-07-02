@@ -9,8 +9,13 @@ export const FakturaService = {
 };
 
 
-async function getNepotvrdjene() {
-    return await AxiosClient.get("http://localhost:8080/api/faktura");
+async function getNepotvrdjene(status) {
+    const options = {
+        params: {
+            status: status ? status : "nepotvrdjena"
+        }
+    }
+    return await AxiosClient.get("http://localhost:8080/api/faktura", options);
 }
 
 async function getFaktura(id){

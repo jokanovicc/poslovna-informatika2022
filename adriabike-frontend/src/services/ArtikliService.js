@@ -15,8 +15,13 @@ export const ArtikliService = {
     korigujCenu
 }
 
-async function getAll(){
-    return await AxiosClient.get("http://localhost:8080/api/articles");
+async function getAll(pageNumber){
+    const options = {
+        params: {
+            page: pageNumber ? pageNumber : 0
+        }
+    }
+    return await AxiosClient.get("http://localhost:8080/api/articles", options);
 }
 
 async function dobaviRobu(novaRoba){

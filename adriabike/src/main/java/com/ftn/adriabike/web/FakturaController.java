@@ -20,10 +20,10 @@ public class FakturaController {
     private FakturaService fakturaService;
 
     @GetMapping()
-    public ResponseEntity<List<IzlaznaFakturaDTO>> findNepotvrdjene(){
+    public ResponseEntity<List<IzlaznaFakturaDTO>> findNepotvrdjene(@RequestParam(defaultValue = "nepotvrdjena") String status){
         return ResponseEntity
                 .ok()
-                .body(fakturaService.getIzlazneFaktureNaCekanju());}
+                .body(fakturaService.getIzlazneFakture(status));}
 
 
     @GetMapping("/{faktura-id}")

@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 const Korpa = () => {
 
     const [stavke, setStavke] = useState([]);
+    const{ukupnaCena} = 0;
     
     useEffect(() => {
         fetchCenovnici();
@@ -57,7 +58,7 @@ const Korpa = () => {
         <hr />
 
 
-        <Table bordered striped>
+        <Table style={{ textAlign: "center", marginTop:"2vh", fontSize:"20px" }} bordered striped>
             <thead className='thead-dark'>
                 <tr>
                     <th>Назив артикла</th>
@@ -78,7 +79,7 @@ const Korpa = () => {
                                 <td>{s.nazivArtikla}</td>
                                 <td>{s.kolicina}</td>
                                 <td>{s.cena}</td>
-                                <td><a onClick={() => removeFromCart(s.id)}>x</a></td>
+                                <td><Button onClick={() => removeFromCart(s.id)} variant="outline-danger">Избаци</Button></td>
                             </tr>
 
                         )
@@ -91,7 +92,7 @@ const Korpa = () => {
         </Table>
         {
             stavke.length > 0 &&
-            <Button onClick={() => zavrsiKupovinu()}>Заврши куповину</Button>
+            <Button style={{width:"100%", width: "100%", backgroundColor: "#2A2F4D", borderColor: "#2A2F4D"}} onClick={() => zavrsiKupovinu()}>Заврши куповину</Button>
 
         }
 

@@ -5,18 +5,20 @@ import { Dropdown, DropdownButton, Table, Button} from 'react-bootstrap';
 const IzlazneFakture = () => {
 
     const [fakture, setFakture] = useState([]);
+    const[status,setStatus] = useState("nepotvrdjena");
+    const options = ["nepotvrdjena", "potvrdjena", "odbijena"];
 
 
     useEffect(() => {
-        getFaktureNepotvrdjene();
+        getFaktureNepotvrdjene(status);
     }, [])
     
 
 
 
-    async function getFaktureNepotvrdjene(){
+    async function getFaktureNepotvrdjene(status){
         try {
-            const response = await FakturaService.getNepotvrdjene();
+            const response = await FakturaService.getNepotvrdjene(status);
             console.log(response.data);
             setFakture(response.data);
         } catch (e) {
@@ -25,15 +27,33 @@ const IzlazneFakture = () => {
 
     }
 
+    async function getValue(status){
+        setStatus(status);
+        await getFaktureNepotvrdjene(status);
 
-
-
+    }
 
 
 
     return (
         <>
             <h2 className='text-center'>Излазне фактуре</h2>
+
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Избор статуса фактуре : {status}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    {
+                        options.map((o) => {
+                            return (
+                                <Dropdown.Item onClick={() => getValue(o)}>{o}</Dropdown.Item>
+                            )
+                        })
+                    }
+                </Dropdown.Menu>
+            </Dropdown>
             
             <hr />
 
@@ -60,7 +80,7 @@ const IzlazneFakture = () => {
                                     <td>{f.datumValute}</td>
                                     <td>{f.ukupnaOsnovica}</td>
                                     <td>
-                                        <a href={/fakture/ + f.id}>Приказ фактуре</a>
+                                        <a href={/faktura/ + f.id}>Приказ фактуре</a>
                                     </td>
                                     <td></td>    
                                                                 

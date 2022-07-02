@@ -31,10 +31,10 @@ public class ArtikalController {
 
 
     @GetMapping
-    public ResponseEntity<List<ArtikalResponseDTO>> getAll(){
+    public ResponseEntity<ArtikliPagingResult> getAll(@RequestParam(defaultValue = "0") Integer page){
         return ResponseEntity
                 .ok()
-                .body(artikalService.findAll());
+                .body(artikalService.findAll(page));
     }
 
     @GetMapping("/listbox")
@@ -58,7 +58,7 @@ public class ArtikalController {
         artikalService.dobavljenjeNoveRobe(dobavljanjeNoveRobeDTO);
         return ResponseEntity
                 .created(new URI("/api/articles/"))
-                .body(artikalService.findAll());
+                .body(artikalService.findAll(1));
     }
 
     @GetMapping("/poreske-kategorije")
