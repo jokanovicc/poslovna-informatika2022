@@ -41,35 +41,32 @@ public class ArtikalService {
     @Autowired
     private PoreskaStopaRepository poreskaStopaRepository;
 
+    @Autowired
+    private PrometMagacinskeKarticeService prometMagacinskeKarticeService;
+
     public ArtikliPagingResult findAll(Integer pageNo) {
-
         Pageable paging = PageRequest.of(pageNo,3);
-
         Page<Artikal> artikli = artikalRepository.getAll(paging);
         List<ArtikalResponseDTO> artikliResponse = new ArrayList<ArtikalResponseDTO>();
-        Cenovnik latestCenovnik = cenovnikRepository.findLatest();
 
+        Cenovnik latestCenovnik = cenovnikRepository.findLatest();
         for (Artikal a : artikli.getContent()) {
             MagacinskaKartica magacinskaKartica = magacinskaKarticaRepository.findFirstByArtikal(a.getId());
             if (magacinskaKartica.getPrometUlazaKolicina() > magacinskaKartica.getPrometIzlazaKolicina()) {
-
                 ArtikalResponseDTO artikalResponseDTO = new ArtikalResponseDTO(a);
                 StavkaCenovnika stavkaCenovnika = stavkaCenovnikaRepository.findStavkaCenovnikaByArtikalAndCenovnik(a, latestCenovnik);
-                System.out.println("######" + a);
                 PoreskaStopa poreskaStopa = poreskaStopaRepository.findLatestPoreskaStopa(a.getPoreskaKategorija().getId());
                 Double cenaSaPorezom = stavkaCenovnika.getCena() + ((stavkaCenovnika.getCena() * poreskaStopa.getProcenatPDV()) / 100);
                 artikalResponseDTO.setUkupnaCena(cenaSaPorezom);
-                artikliResponse.add(artikalResponseDTO);
 
+                artikliResponse.add(artikalResponseDTO);
             }
         }
-
         ArtikliPagingResult artikliPaging = new ArtikliPagingResult();
         artikliPaging.setArtikli(artikliResponse);
         artikliPaging.setPagesCount(artikli.getTotalPages());
 
         return artikliPaging;
-
 
     }
 
@@ -124,45 +121,42 @@ public class ArtikalService {
 
 
     public void dobavljenjeNoveRobe(List<DobavljanjeNoveRobeDTO> dobavljanjeNoveRobeDTOList){
-
-
         for(DobavljanjeNoveRobeDTO dobavljanjeNoveRobeDTO:dobavljanjeNoveRobeDTOList){
-
             if(dobavljanjeNoveRobeDTO.getArtikalId() == null){
-                Artikal artikal = new Artikal();
-                artikal.setNaziv(dobavljanjeNoveRobeDTO.getNaziv());
-                artikal.setOpis(dobavljanjeNoveRobeDTO.getOpis());
-                artikal.setSlika(dobavljanjeNoveRobeDTO.getSlika());
-                artikal.setPakovanje(1);
-
-                artikal.setPoreskaKategorija(poreskaKategorijaRepository.findById(dobavljanjeNoveRobeDTO.getPoreskaId()).orElse(null));
-
+                Artikal artikal = createArtikal(dobavljanjeNoveRobeDTO);
                 Cenovnik latestCenovnik = cenovnikRepository.findLatest();
                 StavkaCenovnika stavkaCenovnika = new StavkaCenovnika();
                 stavkaCenovnika.setArtikal(artikal);
                 stavkaCenovnika.setCena(dobavljanjeNoveRobeDTO.getCena());
                 stavkaCenovnika.setCenovnik(latestCenovnik);
-
                 artikalRepository.save(artikal);
                 stavkaCenovnikaRepository.save(stavkaCenovnika);
                 magacinskaKarticaService.createMagacinskaKartica(dobavljanjeNoveRobeDTO, artikal);
                 dobavljanjeNoveRobeDTO.setArtikalId(artikal.getId());
-
             }else{
                 Artikal artikal = artikalRepository.findById(dobavljanjeNoveRobeDTO.getArtikalId()).orElse(null);
                 MagacinskaKartica magacinskaKartica = magacinskaKarticaRepository.findFirstByArtikal(artikal.getId());
                 magacinskaKartica.setPrometUlazaKolicina(magacinskaKartica.getPrometUlazaKolicina() + dobavljanjeNoveRobeDTO.getKolicina());
                 magacinskaKartica.setPrometUlazaVrednost(magacinskaKartica.getPrometUlazaVrednost() + (dobavljanjeNoveRobeDTO.getKolicina() * getCenaArtiklaOsnovica(artikal)));
+                prometMagacinskeKarticeService.createUlaznogPrometaMagacinskeKartice(dobavljanjeNoveRobeDTO, magacinskaKartica);
+
                 magacinskaKarticaRepository.save(magacinskaKartica);
             }
-
-
         }
 
         prijemnicaService.createPrijemnica(dobavljanjeNoveRobeDTOList);
 
+    }
 
+    public Artikal createArtikal(DobavljanjeNoveRobeDTO dobavljanjeNoveRobeDTO){
+        Artikal artikal = new Artikal();
+        artikal.setNaziv(dobavljanjeNoveRobeDTO.getNaziv());
+        artikal.setOpis(dobavljanjeNoveRobeDTO.getOpis());
+        artikal.setSlika(dobavljanjeNoveRobeDTO.getSlika());
+        artikal.setPakovanje(1);
+        artikal.setPoreskaKategorija(poreskaKategorijaRepository.findById(dobavljanjeNoveRobeDTO.getPoreskaId()).orElse(null));
 
+        return artikal;
     }
 
 

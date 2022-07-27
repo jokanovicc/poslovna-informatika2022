@@ -1,10 +1,8 @@
 package com.ftn.adriabike.web;
 
-import com.ftn.adriabike.model.Artikal;
 import com.ftn.adriabike.service.ArtikalService;
 import com.ftn.adriabike.service.CenovnikService;
 import com.ftn.adriabike.service.PoreskaKategorijaService;
-import com.ftn.adriabike.service.PrijemnicaService;
 import com.ftn.adriabike.web.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -76,7 +73,7 @@ public class ArtikalController {
     public ResponseEntity<CenovnikDTO> poskupi(@RequestBody RastCenovnikaDTO rastCenovnikaDTO){
         return ResponseEntity
                 .ok()
-                .body(cenovnikService.makePoskupljenje(rastCenovnikaDTO));
+                .body(cenovnikService.createNoviCenovnik(rastCenovnikaDTO));
     }
 
     @PostMapping("/korigovanje-cene")

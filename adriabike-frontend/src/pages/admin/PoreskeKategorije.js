@@ -64,14 +64,22 @@ const PoreskeKategorije = () => {
   };
 
   async function sendRequest() {
-    console.log(poreskaStopa);
-    return await PoreskeService.createStopa(poreskaStopa, id).then(() => window.location.reload());
+    if(poreskaStopa.datumStupanja !== "" || poreskaStopa.naziv !== "" || poreskaStopa.procenatPDV > 5){
+      return await PoreskeService.createStopa(poreskaStopa, id).then(() => window.location.reload());
+    }else{
+      alert("Молим те попуни сва поља")
+    }
+
   }
 
   async function sendRequestKategorija() {
-    const response = await PoreskeService.create(kategorija);
-    console.log(response.data);
-    handleShow(response.data.id);
+    if(kategorija.naziv !== ""){
+      const response = await PoreskeService.create(kategorija);
+      console.log(response.data);
+      handleShow(response.data.id);
+    }else{
+      alert("Молим те попуни сва поља")
+    }
   }
 
 

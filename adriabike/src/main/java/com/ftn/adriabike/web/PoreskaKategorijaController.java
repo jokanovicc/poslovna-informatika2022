@@ -5,6 +5,7 @@ import com.ftn.adriabike.service.PoreskaKategorijaService;
 import com.ftn.adriabike.web.dto.PoreskaKategorijaDTO;
 import com.ftn.adriabike.web.dto.PoreskaStopaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class PoreskaKategorijaController {
 
 
     @PostMapping("/{id}/stopa")
+    @ResponseStatus(value = HttpStatus.OK)
     public void addPoreskaStopa(@RequestBody PoreskaStopaDTO poreskaStopa, @PathVariable("id") Integer id){
         poreskaKategorijaService.createPoreskaStopa(id, poreskaStopa);
     }

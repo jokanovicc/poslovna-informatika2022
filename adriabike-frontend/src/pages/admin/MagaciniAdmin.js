@@ -35,10 +35,14 @@ const MagaciniAdmin = () => {
 
 
     const sendRequest = async () => {
-        await MagacinService.create(magacin);
-        Swal.fire('Uspešno unešenea roba!', 'Očivatanje svih prijemnica...', "success").then(
-            ()=>window.location.reload()
-        );
+        if(magacin.naziv === "" || magacin.lokacija === ""){
+            alert("Молим те попуни сва поља")
+        }else{
+            await MagacinService.create(magacin);
+            Swal.fire('Uspešno unešenea roba!', 'Očivatanje svih prijemnica...', "success").then(
+                ()=>window.location.reload()
+            );
+        }
     }
 
 

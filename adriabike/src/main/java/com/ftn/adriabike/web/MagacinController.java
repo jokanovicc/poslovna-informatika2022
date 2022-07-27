@@ -9,6 +9,7 @@ import com.ftn.adriabike.web.dto.MagacinResponseDTO;
 import com.ftn.adriabike.web.dto.MagacinskaKarticaResponse;
 import com.ftn.adriabike.web.dto.PrometMagacinskeKarticeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,6 +80,7 @@ public class MagacinController {
     }
 
     @PostMapping("/otvaranje-stanja")
+    @ResponseStatus(value = HttpStatus.OK)
     public void otvoriStanje(){
         magacinskaKarticaService.createPocetnoStanje();
     }

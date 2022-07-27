@@ -1,5 +1,6 @@
 INSERT INTO korisnik(adresa, broj_telefona, email, ime, lozinka, prezime, roles, username) VALUES ('Temisvarski drum 51', '0653122','vladimirjokanovicc@gmail.com', 'Janko','$2a$12$T6pecbhNSJMX8JKu/yJmcuThLjTQwiu8lEot0sNQulKiRHLEq2cCy', 'Markovic','KUPAC','janko');
 INSERT INTO korisnik(adresa, broj_telefona, email, ime, lozinka, prezime, roles, username) VALUES ('Bulevar Republike 21', '063131','mitar@gmail.com', 'Mitar','$2y$10$hot02.nCHwYwTBb6suq21uz1I/4P8EiSlEkWOzUxN5JHWgaNgF0gC', 'Mitrovic','PRODAVAC','mitar');
+INSERT INTO korisnik(adresa, broj_telefona, email, ime, lozinka, prezime, roles, username) VALUES ('Nemanjina 21', '0631331','admin@gmail.com', 'Ado','$2y$10$hot02.nCHwYwTBb6suq21uz1I/4P8EiSlEkWOzUxN5JHWgaNgF0gC', 'Adminić','ADMIN','ado');
 
 
 
@@ -26,6 +27,9 @@ INSERT INTO artikal(naziv, opis, pakovanje, slika, poreska_kategorija_id) VALUES
 
 INSERT INTO artikal(naziv, opis, pakovanje, slika, poreska_kategorija_id) VALUES ('Scott Road 2', 'Roadbike 2013', 1, '#',1);
 
+insert into prijemnica(broj, datum_dokumenta, datum_knjizenja, magacin_id) values (2321,'2022-07-01', '2022-07-01', 1);
+insert into stavka_prometnog_dokumenta(cena, kolicina, vrednost, artikal_id, prijemnica_id) values (18000,10,180000,1,1);
+insert into stavka_prometnog_dokumenta(cena, kolicina, vrednost, artikal_id, prijemnica_id) values (9000,10,90000,2,1);
 
 insert into magacinska_kartica(pocetno_stanje_kolicina, pocetno_stanje_vrednost, promet_izlaza_kolicina,promet_izlaza_vrednost,promet_ulaza_kolicina, promet_ulaza_vrednost, prosecna_cena, ukupna_vrednost, artikal_id, magacin_id, poslovna_godina_id) VALUES(0, 0, 0, 0, 10, 180000,18000, 180000, 1, 1, 1);
 insert into magacinska_kartica(pocetno_stanje_kolicina, pocetno_stanje_vrednost, promet_izlaza_kolicina,promet_izlaza_vrednost,promet_ulaza_kolicina, promet_ulaza_vrednost, prosecna_cena, ukupna_vrednost, artikal_id, magacin_id, poslovna_godina_id) VALUES(0, 0, 0, 0, 10, 120000,18000, 120000, 2, 1, 1);

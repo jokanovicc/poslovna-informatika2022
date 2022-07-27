@@ -26,18 +26,11 @@ public class PrijemniceController {
 
     }
 
-/*    @GetMapping
-    public ResponseEntity<List<PrijemnicaResponseDTO>> getPrijemnica(){
+    @GetMapping
+    public ResponseEntity<PrijemnicaPagingResponseDTO> getAllPrijemnice(@RequestParam(defaultValue = "0") Integer page){
         return ResponseEntity
                 .ok()
-                .body(prijemnicaService.getAllDetaljnaPrijemnica());
-
-    }*/
-
-    @GetMapping
-    public PrijemnicaPagingResponseDTO getAllPrijemnice(@RequestParam(defaultValue = "0") Integer page){
-        return prijemnicaService.getAllDetaljnaPrijemnica(page);
-
+                .body(prijemnicaService.getAllDetaljnaPrijemnica(page));
 
     }
 

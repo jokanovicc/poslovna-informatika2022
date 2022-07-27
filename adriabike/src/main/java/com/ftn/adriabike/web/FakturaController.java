@@ -5,6 +5,7 @@ import com.ftn.adriabike.web.dto.FakturaEndResponse;
 import com.ftn.adriabike.web.dto.IzlaznaFakturaDTO;
 import com.ftn.adriabike.web.dto.PorukaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +44,7 @@ public class FakturaController {
 
 
     @PostMapping ("/send-poruka")
+    @ResponseStatus(value = HttpStatus.OK)
     public void posaljiPoruku(@RequestBody PorukaDTO poruka){
         fakturaService.posaljiPoruku(poruka);
     }

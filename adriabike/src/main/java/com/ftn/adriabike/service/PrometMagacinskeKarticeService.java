@@ -69,16 +69,13 @@ public class PrometMagacinskeKarticeService {
     }
 
     public List<PrometMagacinskeKarticeDTO> getAnalitika(AnalyticDTO analyticDTO){
-        System.out.println(analyticDTO);
         List<PrometMagacinskeKarticeDTO> prometMagacinskeKartice = new ArrayList<>();
         for(PrometMagacinskeKartice p: prometMagacinskeKarticeRepository.findBetweenDates(analyticDTO.getStartDate(), analyticDTO.getEndDate())){
-            System.out.println("aaa" + p.getSmer().toString());
             if(Objects.equals(analyticDTO.getSmer(), p.getSmer().toString())){
                 prometMagacinskeKartice.add(new PrometMagacinskeKarticeDTO(p));
             }else if(Objects.equals(analyticDTO.getSmer(), "")){
                 prometMagacinskeKartice.add(new PrometMagacinskeKarticeDTO(p));
             }
-
         }
         return prometMagacinskeKartice;
     }

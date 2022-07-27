@@ -66,43 +66,28 @@ public class FakturaService{
         izlaznaFaktura.setUkupanRabat(0.0);
         izlaznaFaktura.setStatusFakture(Status.NEPOTVRDJENA);
         izlaznaFaktura.setKupac(current);
-
-
         fakturaRepository.save(izlaznaFaktura);
-
-        //nadji korpu korisnika
         Korpa korpa = korpaRepository.findFirstByKupac(current);
-
         for(StavkaKorpe stavkaKorpe : stavkaKorpeRepository.findAllByKorpa(korpa)){
             StavkaFakture stavkaFakture = new StavkaFakture();
-            System.out.println("stavka korpe " + stavkaKorpe);
-
             Artikal artikal = artikalRepository.findById(stavkaKorpe.getArtikal().getId()).orElse(null);
-
             stavkaFakture.setKolicina(stavkaKorpe.getKolicina());
             stavkaFakture.setJedinicnaCena(artikalService.getCenaArtikla(artikal));
             stavkaFakture.setRabat(0.0);
             stavkaFakture.setOsnovica(artikalService.getCenaArtiklaOsnovica(artikal));
-
             stavkaFakture.setProcenatPDV(poreskaKategorijaService.getPoreskaStopa(artikal));
             stavkaFakture.setIznosPDV(stavkaFakture.getJedinicnaCena() - stavkaFakture.getOsnovica());
-
             stavkaFakture.setUkupno(stavkaFakture.getKolicina() * stavkaFakture.getJedinicnaCena());
             stavkaFakture.setArtikal(artikal);
             stavkaFakture.setIzlaznaFaktura(izlaznaFaktura);
-
             stavkaFaktureRepository.save(stavkaFakture);
             stavkaKorpeRepository.delete(stavkaKorpe);
-
         }
-
         izlaznaFaktura.setUkupanIznos(stavkaFaktureRepository.getUkupanIznos(izlaznaFaktura.getId()));
         izlaznaFaktura.setUkupnaOsnovica(stavkaFaktureRepository.getUkupnaOsnovica(izlaznaFaktura.getId()));
         izlaznaFaktura.setUkupanPDV(stavkaFaktureRepository.getUkupnoPDV(izlaznaFaktura.getId()));
-
         String subject = "Поштовани/а,\nХвала што купујете код нас.\nСтатус ваше поруџбине можете проверити кроз Ваш налог на сајту.\nУ колико је наручена роба доступна и спремна за реализацију наше сарадње добићете имејл са потврдом да се иста може испоручити или преузети. Тренутни статус ваше поруџбине је: NA ČEKANJU";
-        //notificationService.sendNotification(current, subject, izlaznaFaktura.getBrojFakture());
-
+        notificationService.sendNotification(current, subject, izlaznaFaktura.getBrojFakture());
         korpaRepository.delete(korpa);
 
         fakturaRepository.save(izlaznaFaktura);
@@ -113,8 +98,6 @@ public class FakturaService{
 
     public List<IzlaznaFakturaDTO> getIzlazneFakture(String queryParam){
         List<IzlaznaFakturaDTO> izlaznaFakturaDTO = new ArrayList();
-
-
         if(queryParam.equals("nepotvrdjena")){
             for(IzlaznaFaktura izlaznaFaktura : fakturaRepository.findByStatusFakture(String.valueOf(Status.NEPOTVRDJENA))){
                 izlaznaFakturaDTO.add(new IzlaznaFakturaDTO(izlaznaFaktura));
@@ -127,7 +110,6 @@ public class FakturaService{
 
             }
         }
-
         if(queryParam.equals("odbijena")){
             for(IzlaznaFaktura izlaznaFaktura : fakturaRepository.findByStatusFakture(String.valueOf(Status.ODBIJENA))){
                 izlaznaFakturaDTO.add(new IzlaznaFakturaDTO(izlaznaFaktura));
@@ -140,7 +122,6 @@ public class FakturaService{
 
             }
         }
-
         if(queryParam.equals("potvrdjena")){
             for(IzlaznaFaktura izlaznaFaktura : fakturaRepository.findByStatusFakture(String.valueOf(Status.POTVRDJENA))){
                 izlaznaFakturaDTO.add(new IzlaznaFakturaDTO(izlaznaFaktura));
@@ -211,15 +192,12 @@ public class FakturaService{
                 fakturaEnd.setPoruka(message.toString());
                 list.add(false);
             }
-
-
         }
         if(list.contains(false)){
             fakturaEnd.setPotvrdjena(false);
         }else{
             fakturaEnd.setPotvrdjena(true);
         }
-
         return fakturaEnd;
     }
 

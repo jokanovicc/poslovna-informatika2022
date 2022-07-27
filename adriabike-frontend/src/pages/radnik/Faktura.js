@@ -58,10 +58,11 @@ const Faktura = () => {
             const response = await FakturaService.endFaktura(id);
             console.log(response.data);
             if (response.data.potvrdjena == true) {
-                Swal.fire("Kreirano uspesno!", 'Faktura je izdata, trazene kolicine su dostupne', 'success');
+                Swal.fire("Успешно потврђена фактура!", 'Фактура је издата, тражене количине су доступне', 'success');
             } else {
                 Swal.fire("Neuspešno", response.data.poruka, 'error').then(handleShow());
             }
+            fetchFaktura();
         } catch (e) {
             console.error("Error while getting api")
         }

@@ -21,8 +21,13 @@ async function login(userCredentials) {
       TokenService.setToken(response.data);
       if (getRole() == "ROLE_KUPAC") {
         window.location.assign("/home-customer")
-      } else {
+      }
+      else if (getRole() == "ROLE_PRODAVAC"){
         window.location.assign("/home-radnik")
+      }
+    
+      else {
+        window.location.assign("/admin-glavna")
       }
     } else {
       console.error("Invalid token");

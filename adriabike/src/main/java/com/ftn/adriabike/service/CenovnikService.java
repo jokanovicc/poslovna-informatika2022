@@ -66,7 +66,7 @@ public class CenovnikService {
 
     }
 
-    public CenovnikDTO makePoskupljenje(RastCenovnikaDTO rastCenovnikaDTO){
+    public CenovnikDTO createNoviCenovnik(RastCenovnikaDTO rastCenovnikaDTO){
         Cenovnik cenovnik = cenovnikRepository.findLatest();
         List<StavkaCenovnika> stavka = stavkaCenovnikaRepository.findAllByCenovnik(cenovnik);
 
@@ -90,7 +90,6 @@ public class CenovnikService {
         }
 
         return new CenovnikDTO(noviCenovnik);
-
 
     }
 

@@ -36,14 +36,15 @@ public class PrijemnicaService {
     @Autowired
     private PoreskaKategorijaService poreskaKategorijaService;
 
-    void createPrijemnica(List<DobavljanjeNoveRobeDTO> dobavljanjeNoveRobeDTO){
+    @Autowired ArtikalService artikalService;
+
+    public void createPrijemnica(List<DobavljanjeNoveRobeDTO> dobavljanjeNoveRobeDTO){
 
         Prijemnica prijemnica = new Prijemnica();
         prijemnica.setBroj((int) Math.floor(Math.random()*(50000-20000+1)+1000));
         prijemnica.setDatumDokumenta(new Date(Calendar.getInstance().getTime().getTime()));
         prijemnica.setDatumKnjizenja(prijemnica.getDatumDokumenta());
         prijemnica.setMagacin(magacinRepository.findById(getMagacinFromDobavljanjeNoveRobe(dobavljanjeNoveRobeDTO)).orElse(null));
-
 
         prijemnicaRepository.save(prijemnica);
 
@@ -64,13 +65,18 @@ public class PrijemnicaService {
     private void createStavkaPrometnogDokumenta(List<DobavljanjeNoveRobeDTO> dobavljanjeNoveRobeDTOList, Prijemnica prijemnica) {
 
         for(DobavljanjeNoveRobeDTO dobavljenjeNoveRobe: dobavljanjeNoveRobeDTOList){
-
             StavkaPrometnogDokumenta stavkaPrometnogDokumenta = new StavkaPrometnogDokumenta();
+            Artikal artikal = artikalRepository.findById(dobavljenjeNoveRobe.getArtikalId()).orElse(null);
             stavkaPrometnogDokumenta.setPrijemnica(prijemnica);
-            stavkaPrometnogDokumenta.setArtikal(artikalRepository.findById(dobavljenjeNoveRobe.getArtikalId()).orElse(null));
+            stavkaPrometnogDokumenta.setArtikal(artikal);
             stavkaPrometnogDokumenta.setKolicina(dobavljenjeNoveRobe.getKolicina());
-            stavkaPrometnogDokumenta.setCena(dobavljenjeNoveRobe.getCena());
-            stavkaPrometnogDokumenta.setVrednost(dobavljenjeNoveRobe.getKolicina() * dobavljenjeNoveRobe.getCena());
+            if(dobavljenjeNoveRobe.getCena() == 0){
+                stavkaPrometnogDokumenta.setCena(artikalService.getCenaArtiklaOsnovica(artikal));
+                stavkaPrometnogDokumenta.setVrednost(dobavljenjeNoveRobe.getKolicina() * artikalService.getCenaArtiklaOsnovica(artikal));
+            }else{
+                stavkaPrometnogDokumenta.setCena(dobavljenjeNoveRobe.getCena());
+                stavkaPrometnogDokumenta.setVrednost(dobavljenjeNoveRobe.getKolicina() * dobavljenjeNoveRobe.getCena());
+            }
             stavkaPrometnogDokumentaRepository.save(stavkaPrometnogDokumenta);
 
         }
@@ -113,10 +119,6 @@ public class PrijemnicaService {
         PrijemnicaPagingResponseDTO prijemnicePaging = new PrijemnicaPagingResponseDTO();
         prijemnicePaging.setPrijemnice(prijemnicaResponseDTO);
         prijemnicePaging.setPagesCount(prijemnice.getTotalPages());
-
-
-
-
 
         return prijemnicePaging;
     }

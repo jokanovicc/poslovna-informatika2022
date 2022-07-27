@@ -22,13 +22,11 @@ public class NotificationService {
 
     public void sendNotification(Korisnik korisnik, String subject, Integer brojPorudzbine) throws MailException {
         //send email
-
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(korisnik.getEmail());
         mail.setFrom("adriabikestore@gmail.com");
         mail.setSubject("ADRIA BIKE DOO - Novi Sad: Поружбина број: "+brojPorudzbine);
         mail.setText(subject);
-
 
         javaMailSender.send(mail);
 

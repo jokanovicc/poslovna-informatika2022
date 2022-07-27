@@ -113,8 +113,8 @@ const DodavanjeRobe = () => {
         console.log(listaNoveRoba);
         if(listaNoveRoba.length > 0){
             await ArtikliService.dobaviRobu(listaNoveRoba);
-            Swal.fire('Uspešno unešenea roba!', 'Očivatanje svih prijemnica...', "success").then(
-                () => window.location.assign("/warehouse")
+            Swal.fire('Роба је успешно унесена!', 'Очитавање свих пријемница...', "success").then(
+                () => window.location.assign("/prijemnice")
             );
         }else{
             alert("Lista je prazna!")

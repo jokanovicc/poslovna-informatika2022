@@ -25,6 +25,7 @@ import PoreskeKategorije from "./pages/admin/PoreskeKategorije";
 import AnalitikaKartice from "./pages/radnik/AnalitikaKartice";
 import KorigovanjeCenovnika from "./pages/radnik/KorigovanjeCenovnika";
 import { PrivateRoute } from "./components/PrivateRoute";
+import AdminGlavna from "./pages/admin/AdminGlavna";
 
 function App() {
   return (
@@ -59,6 +60,8 @@ function App() {
           <PrivateRoute path="/admin-magacini" component={MagaciniAdmin} roles={["ROLE_ADMIN"]}/>
           <PrivateRoute path="/poreske-kategorije" component={PoreskeKategorije} roles={["ROLE_ADMIN"]}/>
           <PrivateRoute path="/korigovanje-cenovnika/:id" component={KorigovanjeCenovnika} roles={["ROLE_PRODAVAC"]}/>
+          <PrivateRoute path="/admin-glavna" component={AdminGlavna} roles={["ROLE_ADMIN"]}/>
+
         </Switch>
       </Container>
       <Footer />
